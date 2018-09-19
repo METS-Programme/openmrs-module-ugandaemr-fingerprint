@@ -11,7 +11,6 @@
     <packaging>jar</packaging>
     <name>UgandaEMR FingerPrint Module OMOD</name>
     <description>OMOD project for UgandaEMRFingerPrint</description>
-
     <dependencies>
 
         <!--
@@ -141,7 +140,6 @@
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
         </dependency>
-
     </dependencies>
 
     <build>

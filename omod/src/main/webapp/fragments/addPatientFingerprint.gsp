@@ -90,24 +90,12 @@ ${ui.includeFragment("coreapps", "patientHeader", [patient: patient])}
 <h3>${ui.message("ugandaemrfingerprint.app.addfingerprint.label")}</h3>
 
 <div id="calculationDiv">
-    <%
-        if (!rightThumbFingerEnrolled) {
-    %>
-    <button id="thumb" onclick="sendNum(5);">Scan Right Thumb</button>
+    <% fingers.each { k, v -> %>
+    <button id="thumb" onclick="sendNum(${k});">Scan ${v}</button>
     <% } %>
-    <%
-        if (!rightIndexFingerEnrolled) {
-    %>
-    <button id="index" onclick="sendNum(6);">Scan Right Index</button>
-    <%
-        }
-    %>
-    <%
-        if (rightThumbFingerEnrolled || rightIndexFingerEnrolled) {
-    %>
+    <% if (fingerPrintEnrolled > 0) { %>
     <button id="delete" onclick="deleteFingerPrints()">Delete Existing Finger Prints</button>
     <% } %>
-
     <p id="calResponse"></p>
 
     <p id="deleteMessage"></p>

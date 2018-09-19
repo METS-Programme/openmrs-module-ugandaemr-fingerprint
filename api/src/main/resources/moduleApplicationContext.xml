@@ -30,8 +30,7 @@
                         </bean>
                     </property>
                     <property name="transactionAttributeSource">
-                        <bean
-                                class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource" />
+                        <bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource" />
                     </property>
                 </bean>
             </list>

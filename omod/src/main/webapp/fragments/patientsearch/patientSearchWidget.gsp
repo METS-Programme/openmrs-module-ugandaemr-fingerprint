@@ -105,10 +105,10 @@ img {
         } else if (message.type === "local" && message.patient !== "") {
             window.location = "../../coreapps/clinicianfacing/patient.page?patientId=" + message.patient;
         }
-        else if (message.type === "online" && message.patient !== "") {
+        else if (message.type === "online" && message.patient !== "" && ${searchOnline}===true) {
             window.location = "/openmrs/ugandaemrfingerprint/patientInOtherFacility.page?patientId=" + message.patient;
         }
-        else if (message.type === null && (message.patient === null || message.patient === "")) {
+        else if (message.type === null && (message.patient === null || message.patient === "") && ${searchOnline}===true) {
             var message;
             message = '{"result":"Patient Not Found at Central Server"}';
             showResult(JSON.parse(message));

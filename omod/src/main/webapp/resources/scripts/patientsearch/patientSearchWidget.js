@@ -48,12 +48,12 @@ function PatientSearchWidget(configuration){
     //FingerPrint
     var patientSearchFingerPrintDiv = jq('#patient-search-finger-print');
     patientSearchFingerPrintDiv.hide();
-    
+
     var patientSearchFingerPrintButton = jq('#patient-search-finger-print-button');
     patientSearchFingerPrintButton.click(function(){
     	patientSearchFingerPrintDiv.toggle();
 	});
-    
+
     // set the locale for Moment.js
     // Creole not currently supported by Moment and for some reason it defaults to Japaneses if we don't explicitly set fallback options in the locale() call
     moment.locale([configuration.locale, configuration.defaultLocale, 'en']);

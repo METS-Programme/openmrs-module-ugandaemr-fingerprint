@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <privilege  privilege="App: fingerprint.add"  description="Able to add Patient fingerprint"  uuid="9c9d3fa6-10a9-11e8-b642-0ed5f89f718b"/>
+    <privilege  privilege="App: fingerprint.findPatient"  description="Able to search patient fingerprint"  uuid="9c9d4302-10a9-11e8-b642-0ed5f89f718b
+"/>
+</dataset>

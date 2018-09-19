@@ -92,7 +92,11 @@
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>metadatasharing-api</artifactId>
 		</dependency>
-			<!--End FingerPrint Device -->
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>dataexchange-api</artifactId>
+		</dependency>
+        <!--End FingerPrint Device -->
 	</dependencies>
 	
 	<build>

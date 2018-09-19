@@ -20,6 +20,7 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.Module;
 import org.openmrs.module.ModuleActivator;
 import org.openmrs.module.ModuleFactory;
+import org.openmrs.module.dataexchange.DataImporter;
 import org.openmrs.module.ugandaemrfingerprint.core.FingerPrintMetadataBundle;
 import org.openmrs.module.metadatadeploy.api.MetadataDeployService;
 import org.openmrs.module.ugandaemrfingerprint.remoteserver.FingerPrintGlobalProperties;
@@ -60,6 +61,11 @@ public class UgandaEMRFingerprintActivator implements ModuleActivator {
         MetadataDeployService deployService = Context.getService(MetadataDeployService.class);
         FingerPrintGlobalProperties fingerPrintGlobalProperties = new FingerPrintGlobalProperties();
         try {
+            DataImporter dataImporter = Context.getRegisteredComponent("dataImporter", DataImporter.class);
+            log.info("Installing Privileges for Point of Care");
+            dataImporter.importData("metadata/Fingerprint_Privileges.xml");
+            log.info("Privileges  Installation Complete");
+
             fingerPrintGlobalProperties.setFingerPrintGlobalProperties();
             installCommonMetadata(deployService);
             log.info("UgandaEMR FingerPrint Module started");
