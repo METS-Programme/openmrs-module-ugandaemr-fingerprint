@@ -19,19 +19,6 @@ img {
 </style>
 <script type="text/javascript">
     var lastViewedPatients = [];
-    <%  if (showLastViewedPatients && !doInitialSearch) {
-            lastViewedPatients.each { it -> %>
-    lastViewedPatients.push({
-        uuid: "${ it.uuid }",
-        name: "${ it.personName ? ui.escapeJs(ui.format(it.personName)) : '' }",
-        gender: "${ it.gender }",
-        age: "${ it.age ?: '' }",
-        birthdate: "${ it.birthdate ? dateFormatter.format(it.birthdate) : '' }",
-        birthdateEstimated: ${ it.birthdateEstimated },
-        identifier: "${ it.patientIdentifier ? ui.escapeJs(it.patientIdentifier.identifier) : '' }"
-    });
-    <%      }
-        }%>
     function handlePatientRowSelection() {
         this.handle = function (row) {
             var uuid = row.uuid;
@@ -72,7 +59,9 @@ img {
                 birthdateColHeader: '${ ui.message("coreapps.birthdate") }'
             }
         };
-        new PatientSearchWidget(widgetConfig);
+        var searchString="${simpleNationalIdString.replace('"', '\\"')}";
+        new PatientSearchWidget(widgetConfig,${searchOnline},searchString,"${connectionProtocol+onlineIpAddress+queryURL}");
+
     });
 </script>
 <script type="text/javascript">

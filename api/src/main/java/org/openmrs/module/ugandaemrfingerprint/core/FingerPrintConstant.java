@@ -28,13 +28,15 @@ public class FingerPrintConstant {
     public static final String PATIENT_ID = "patient.id";
 
     public static final String PATIENT_UUID_SEARCH_STRING = "{patient(patients:[\"%s\"]){uuid birthdate gender dead patientFacility{ uuid name} names{ familyName middleName givenName voided} summaryPage{obs {uuid concept encounterDate encounterType valueCoded valueText valueNumeric valueDatetime valueDrug valueBoolean valueComplex voided }} mostRecentEncounter{obs { uuid concept encounterDate encounterType valueCoded valueText valueNumeric valueDatetime valueDrug valueBoolean valueComplex voided}}}}";
-    public static final String PATIENT_NATIONAL_ID_SEARCH_STRING = "{patient(identifier:{t:\"f0c16a6d-dc5f-4118-a803-616d0075d282\",v:\"%s\"}){uuid birthdate gender dead patientFacility{ uuid name} names{ familyName middleName givenName voided}}}";
+    public static final String PATIENT_NATIONAL_ID_SEARCH_STRING = "{patient(identifier:{t:\"f0c16a6d-dc5f-4118-a803-616d0075d282\",v:\"%s\"}){uuid birthdate gender dead patientFacility{ uuid name} names{ familyName middleName givenName voided} summaryPage{obs {uuid concept encounterDate encounterType valueCoded valueText valueNumeric valueDatetime valueDrug valueBoolean valueComplex voided }} mostRecentEncounter{obs { uuid concept encounterDate encounterType valueCoded valueText valueNumeric valueDatetime valueDrug valueBoolean valueComplex voided}}}}";
+    public static final String PATIENT_NATIONAL_ID_SIMPLE_SEARCH_STRING = "{patient(identifier: {t:\"f0c16a6d-dc5f-4118-a803-616d0075d282\", v:\"%s\"}) {uuid}}";
     public static final String PATIENT_ONLINE_ID = "identifiers";
     public static final String PATIENT_NOT_FOUND = "Patient Not Found";
     public static final String CONNECTION_TEST_IP = "google.com/";
     public static final String DEVICE_SOCKET_IP = "ugandaemrfingerprint.socketIPAddress";
     public static final String DEVICE_SOCKET_IP_PLACE_HOLDER = "/complete";
 
+    public static final String ONLINE_SEARCH_ENABLE_DISABLE = "ugandaemrfingerprint.searchOnline";
 
     public static final int RIGHT_THUMB = 5;
     public static final int RIGHT_INDEX = 6;
