@@ -114,7 +114,7 @@ public class UgandaEMRFingerprintServiceImpl extends BaseOpenmrsService implemen
         List<PatientOb> patientSummary = null;
 
 
-        if (client.get(PATIENT_SUMMARY).isJsonObject()) {
+        if (client.get(PATIENT_SUMMARY)!=null && client.get(PATIENT_SUMMARY).isJsonObject()) {
             try {
                 patientSummary = getEncounter(client.get(PATIENT_SUMMARY).getAsJsonObject().get(OBS).getAsJsonArray());
             } catch (Exception e) {
@@ -123,7 +123,7 @@ public class UgandaEMRFingerprintServiceImpl extends BaseOpenmrsService implemen
         }
 
         List<PatientOb> lastEncounter = null;
-        if (client.get(PATIENT_LAST_ENCOUNTER).isJsonObject()) {
+        if (client.get(PATIENT_LAST_ENCOUNTER)!=null && client.get(PATIENT_LAST_ENCOUNTER).isJsonObject()) {
             try {
                 lastEncounter = getEncounter(client.get(PATIENT_LAST_ENCOUNTER).getAsJsonObject().get(OBS).getAsJsonArray());
             } catch (Exception e) {

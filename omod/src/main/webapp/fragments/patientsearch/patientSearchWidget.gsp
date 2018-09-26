@@ -138,7 +138,3 @@ img {
 </div>
 
 <div id="patient-search-results"></div>
-
-<div id="remote-search">
-    <a href="${ui.pageLink('ugandaemrfingerprint', 'patientInOtherFacility')}">remote search</a>
-</div>
