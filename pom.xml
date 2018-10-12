@@ -1,9 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.openmrs.module</groupId>
     <artifactId>ugandaemrfingerprint</artifactId>
-    <version>1.0.4-SNAPSHOT</version>
+    <version>1.0.5-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>UgandaEMR FingerPrint Module</name>
     <description>Patient registration and search</description>
@@ -22,10 +23,11 @@
 
     <scm>
         <connection>scm:git:https://github.com/METS-Programme/openmrs-module-ugandaemr-fingerprint.git</connection>
-        <developerConnection>scm:git:https://github.com/METS-Programme/openmrs-module-ugandaemr-fingerprint.git</developerConnection>
+        <developerConnection>scm:git:https://github.com/METS-Programme/openmrs-module-ugandaemr-fingerprint.git
+        </developerConnection>
         <url>https://github.com/METS-Programme/openmrs-module-ugandaemr-fingerprint.git</url>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
 
     <modules>
         <module>api</module>
@@ -143,6 +145,13 @@
 
             <dependency>
                 <groupId>org.openmrs.module</groupId>
+                <artifactId>dataexchange-api</artifactId>
+                <version>${dataexchangeVersion}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
                 <artifactId>emrapi-api</artifactId>
                 <version>${emrapiVersion}</version>
                 <type>jar</type>
@@ -194,24 +203,11 @@
             </dependency>
             <!--End FingerPrint Device -->
 
-            <dependency>
-                <groupId>com.google.code.gson</groupId>
-                <artifactId>gson</artifactId>
-                <version>2.8.0</version>
-            </dependency>
-
             <!--Mysql-->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>5.1.22</version>
-            </dependency>
-
-            <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>19.0</version>
             </dependency>
 
             <dependency>

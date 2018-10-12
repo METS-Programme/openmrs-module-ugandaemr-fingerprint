@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.openmrs.module</groupId>
 		<artifactId>ugandaemrfingerprint</artifactId>
-		<version>1.0.4-SNAPSHOT</version>
+		<version>1.0.5-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>ugandaemrfingerprint-api</artifactId>
@@ -26,11 +26,6 @@
 		
 
 		<!-- Begin OpenMRS org.openmrs.module.ugandaemrfingerprintngerprint.core -->
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-		</dependency>
-
 		<dependency>
 			<groupId>org.openmrs.api</groupId>
 			<artifactId>openmrs-api</artifactId>
@@ -92,7 +87,21 @@
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>metadatasharing-api</artifactId>
 		</dependency>
-			<!--End FingerPrint Device -->
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>dataexchange-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.metaparadigm</groupId>
+			<artifactId>json-rpc</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20160212</version>
+		</dependency>
+		<!--End FingerPrint Device -->
 	</dependencies>
 	
 	<build>

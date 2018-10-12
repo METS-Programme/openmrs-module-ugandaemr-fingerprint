@@ -74,6 +74,10 @@
         <require_module>
             org.openmrs.module.metadatadeploy
         </require_module>
+
+        <require_module>
+            org.openmrs.module.dataexchange
+        </require_module>
     </require_modules>
     <!-- / Required Modules -->
 
@@ -94,6 +98,87 @@
             have been entered
         </description>
     </globalProperty>
+
+    <globalProperty>
+        <property>ugandaemrfingerprint.enableRightPinky</property>
+        <defaultValue>false</defaultValue>
+        <description>
+            Enables the Right Pinky finger to be captured
+        </description>
+    </globalProperty>
+
+    <globalProperty>
+        <property>ugandaemrfingerprint.enableRightRing</property>
+        <defaultValue>false</defaultValue>
+        <description>
+            Enables the Right Ring finger to be captured
+        </description>
+    </globalProperty>
+
+    <globalProperty>
+        <property>ugandaemrfingerprint.enableRightMiddle</property>
+        <defaultValue>false</defaultValue>
+        <description>
+            Enables the Right Middle finger to be captured
+        </description>
+    </globalProperty>
+
+    <globalProperty>
+        <property>ugandaemrfingerprint.enableRightIndex</property>
+        <defaultValue>true</defaultValue>
+        <description>
+            Enables the Right Index finger to be captured
+        </description>
+    </globalProperty>
+
+    <globalProperty>
+        <property>ugandaemrfingerprint.enableRightThumb</property>
+        <defaultValue>true</defaultValue>
+        <description>
+            Enables the Right Thumb finger to be captured
+        </description>
+    </globalProperty>
+
+    <globalProperty>
+        <property>ugandaemrfingerprint.enableLeftPinky</property>
+        <defaultValue>false</defaultValue>
+        <description>
+            Enables the Left Pinky finger to be captured
+        </description>
+    </globalProperty>
+
+    <globalProperty>
+        <property>ugandaemrfingerprint.enableLeftRing</property>
+        <defaultValue>false</defaultValue>
+        <description>
+            Enables the Left Ring finger to be captured
+        </description>
+    </globalProperty>
+
+    <globalProperty>
+        <property>ugandaemrfingerprint.enableLeftMiddle</property>
+        <defaultValue>false</defaultValue>
+        <description>
+            Enables the Left Middle finger to be captured
+        </description>
+    </globalProperty>
+
+    <globalProperty>
+        <property>ugandaemrfingerprint.enableLeftIndex</property>
+        <defaultValue>false</defaultValue>
+        <description>
+            Enables the Left Index finger to be captured
+        </description>
+    </globalProperty>
+
+    <globalProperty>
+        <property>ugandaemrfingerprint.enableLeftThumb</property>
+        <defaultValue>false</defaultValue>
+        <description>
+            Enables the Left Thumb finger to be captured
+        </description>
+    </globalProperty>
+
 
     <privilege>
         <name>Task: coreapps.endVisit</name>

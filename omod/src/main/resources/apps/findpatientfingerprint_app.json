@@ -30,5 +30,20 @@
             "requiredPrivilege": "App: fingerprint.findPatient"
         }
     ]
+},{
+    "id": "fingerprint.configs",
+    "description": "FingerPrint Configurations",
+    "order": 5,
+    "extensions": [
+        {
+            "id": "coreapps.activeVisitsHomepageLink",
+            "extensionPointId": "systemAdministration.apps",
+            "type": "link",
+            "label": "FingerPrint Settings",
+            "url": "admin/maintenance/settings.list?show=Ugandaemrfingerprint",
+            "icon": " icon-cog",
+            "requiredPrivilege": "App: coreapps.systemAdministration"
+        }
+    ]
 }
 ]

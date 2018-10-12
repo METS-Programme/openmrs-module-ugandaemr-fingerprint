@@ -1,4 +1,4 @@
-function PatientSearchWidget(configuration){
+function PatientSearchWidget(configuration,searchOnline,searchString,url){
     var defaults = {
         minSearchCharacters: 3,
         searchInputId: 'patient-search',
@@ -48,12 +48,12 @@ function PatientSearchWidget(configuration){
     //FingerPrint
     var patientSearchFingerPrintDiv = jq('#patient-search-finger-print');
     patientSearchFingerPrintDiv.hide();
-    
+
     var patientSearchFingerPrintButton = jq('#patient-search-finger-print-button');
     patientSearchFingerPrintButton.click(function(){
     	patientSearchFingerPrintDiv.toggle();
 	});
-    
+
     // set the locale for Moment.js
     // Creole not currently supported by Moment and for some reason it defaults to Japaneses if we don't explicitly set fallback options in the locale() call
     moment.locale([configuration.locale, configuration.defaultLocale, 'en']);
@@ -119,6 +119,25 @@ function PatientSearchWidget(configuration){
                     updateSearchResults(data.results);
                     if (autoSelectIfExactIdentifierMatch && data.results.length == 1) {
                         selectRow(0);
+                    }
+                }else if(data.results.length<=0 && (currRequestCount || currRequestCount < requestCount) && query.replace(/\(|\)|\s+|-/g, "").match(/^$|^[A-Z][FM]\d{5}([A-Z0-9]){7}$/) && searchOnline){
+                    if (navigator.onLine) {
+                        jq.post(url, {query: searchString.replace("%s",query)},
+                            function (response) {
+                                if (response && response.data.patient !== null) {
+                                    jq().toastmessage('showSuccessToast', "Patient Found");
+                                    window.location = "/openmrs/ugandaemrfingerprint/patientInOtherFacility.page?patientId=" + response.data.patient.uuid;
+                                }
+                                else if (response.errors) {
+                                    jq().toastmessage('showErrorToast', "Internal Server Error");
+                                }
+                                else {
+                                    jq().toastmessage('showErrorToast', "Patient Not Found");
+                                    jq("#patient_found").attr("display", "none");
+                                }
+                            });
+                    } else {
+                        jq().toastmessage('showErrorToast', "No internet Connection");
                     }
                 }
                 else {
