@@ -19,19 +19,6 @@ img {
 </style>
 <script type="text/javascript">
     var lastViewedPatients = [];
-    <%  if (showLastViewedPatients && !doInitialSearch) {
-            lastViewedPatients.each { it -> %>
-    lastViewedPatients.push({
-        uuid: "${ it.uuid }",
-        name: "${ it.personName ? ui.escapeJs(ui.format(it.personName)) : '' }",
-        gender: "${ it.gender }",
-        age: "${ it.age ?: '' }",
-        birthdate: "${ it.birthdate ? dateFormatter.format(it.birthdate) : '' }",
-        birthdateEstimated: ${ it.birthdateEstimated },
-        identifier: "${ it.patientIdentifier ? ui.escapeJs(it.patientIdentifier.identifier) : '' }"
-    });
-    <%      }
-        }%>
     function handlePatientRowSelection() {
         this.handle = function (row) {
             var uuid = row.uuid;
@@ -72,7 +59,9 @@ img {
                 birthdateColHeader: '${ ui.message("coreapps.birthdate") }'
             }
         };
-        new PatientSearchWidget(widgetConfig);
+        var searchString="${simpleNationalIdString.replace('"', '\\"')}";
+        new PatientSearchWidget(widgetConfig,${searchOnline},searchString,"${connectionProtocol+onlineIpAddress+queryURL}");
+
     });
 </script>
 <script type="text/javascript">
@@ -105,10 +94,10 @@ img {
         } else if (message.type === "local" && message.patient !== "") {
             window.location = "../../coreapps/clinicianfacing/patient.page?patientId=" + message.patient;
         }
-        else if (message.type === "online" && message.patient !== "") {
+        else if (message.type === "online" && message.patient !== "" && ${searchOnline}===true) {
             window.location = "/openmrs/ugandaemrfingerprint/patientInOtherFacility.page?patientId=" + message.patient;
         }
-        else if (message.type === null && (message.patient === null || message.patient === "")) {
+        else if (message.type === null && (message.patient === null || message.patient === "") && ${searchOnline}===true) {
             var message;
             message = '{"result":"Patient Not Found at Central Server"}';
             showResult(JSON.parse(message));
@@ -149,7 +138,3 @@ img {
 </div>
 
 <div id="patient-search-results"></div>
-
-<div id="remote-search">
-    <a href="${ui.pageLink('ugandaemrfingerprint', 'patientInOtherFacility')}">remote search</a>
-</div>

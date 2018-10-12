@@ -9,10 +9,11 @@
  */
 package org.openmrs.module.ugandaemrfingerprint.api.impl;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.openmrs.Concept;
 import org.openmrs.EncounterType;
 import org.openmrs.api.ConceptService;
@@ -103,34 +104,38 @@ public class UgandaEMRFingerprintServiceImpl extends BaseOpenmrsService implemen
     }
 
 
-    public PatientInOtherFacility getPatientInOtherFacility(JsonObject client) {
+    public PatientInOtherFacility getPatientInOtherFacility(JSONObject client) {
 
         List<PatientName> patientNames = new ArrayList<PatientName>();
 
-        patientNames = getPatientNames(client.get(PATIENT_NAMES).getAsJsonArray().get(0).getAsJsonObject());
+        patientNames = getPatientNames(client.getJSONArray(PATIENT_NAMES).getJSONObject(0));
 
-        Facility facilities = getPatientFacility(client.get(PATIENT_FACILITY_NAME).getAsJsonObject());
+        Facility facilities = getPatientFacility(client.getJSONObject(PATIENT_FACILITY_NAME));
 
         List<PatientOb> patientSummary = null;
 
+        ObjectMapper mapper = new ObjectMapper();
 
-        if (client.get(PATIENT_SUMMARY).isJsonObject()) {
-            try {
-                patientSummary = getEncounter(client.get(PATIENT_SUMMARY).getAsJsonObject().get(OBS).getAsJsonArray());
-            } catch (Exception e) {
-                log.error(e);
+
+        try {
+            if (client.getJSONObject(PATIENT_SUMMARY) != null) {
+
+                patientSummary = getEncounter(client.getJSONObject(PATIENT_SUMMARY).getJSONArray(OBS));
             }
+        } catch (Exception e) {
+            log.error(e);
         }
 
         List<PatientOb> lastEncounter = null;
-        if (client.get(PATIENT_LAST_ENCOUNTER).isJsonObject()) {
-            try {
-                lastEncounter = getEncounter(client.get(PATIENT_LAST_ENCOUNTER).getAsJsonObject().get(OBS).getAsJsonArray());
-            } catch (Exception e) {
-                log.error(e);
-            }
+        try {
+            if (client.getJSONObject(PATIENT_LAST_ENCOUNTER) != null) {
 
+                lastEncounter = getEncounter(client.getJSONObject(PATIENT_LAST_ENCOUNTER).getJSONArray(OBS));
+            }
+        } catch (Exception e) {
+            log.error(e);
         }
+
 
         PatientInOtherFacility patientInOtherFacility = new PatientInOtherFacility(cleanRecord(client.get(DATE_OF_BIRTH).toString()), cleanRecord(client.get(GENDER).toString()), patientNames, facilities, patientSummary, lastEncounter);
 
@@ -163,7 +168,7 @@ public class UgandaEMRFingerprintServiceImpl extends BaseOpenmrsService implemen
         return ecounterTypeName;
     }
 
-    private List<PatientName> getPatientNames(JsonObject jsonObject) {
+    private List<PatientName> getPatientNames(JSONObject jsonObject) {
         List<PatientName> patientNames = new ArrayList<PatientName>();
         PatientName patientName = new PatientName();
         patientName.setFamilyName(jsonObject.get(PATIENT_FAMILY_NAME).toString());
@@ -176,7 +181,7 @@ public class UgandaEMRFingerprintServiceImpl extends BaseOpenmrsService implemen
         return patientNames;
     }
 
-    private Facility getPatientFacility(JsonObject map) {
+    private Facility getPatientFacility(JSONObject map) {
         Facility facility = new Facility();
         facility.setName(map.get(NAME).toString());
         facility.setFacilityId(map.get(FingerPrintConstant.UUID_STRING).toString());
@@ -184,13 +189,13 @@ public class UgandaEMRFingerprintServiceImpl extends BaseOpenmrsService implemen
     }
 
 
-    private List<PatientOb> getEncounter(JsonArray jsonObject) {
+    private List<PatientOb> getEncounter(JSONArray jsonArray) {
         List<PatientOb> obsList = new ArrayList<PatientOb>();
 
         try {
-            for (int i = 0; i <= jsonObject.size(); i++) {
+            for (int i = 0; i <= jsonArray.length(); i++) {
                 PatientOb patientOb = new PatientOb();
-                JsonObject jsonObject1 = jsonObject.get(i).getAsJsonObject();
+                JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                 patientOb.setEncounterDate(jsonObject1.get(ENCOUNTER_DATE).toString());
                 patientOb.setEncounterType((String) getEncounterType(cleanRecord(jsonObject1.get(ENCOUNTER_TYPE).toString().replace("\"", ""))));
                 patientOb.setValueBoolean((String) jsonObject1.get(VALUE_BOOLEAN).toString().replace("\"", ""));

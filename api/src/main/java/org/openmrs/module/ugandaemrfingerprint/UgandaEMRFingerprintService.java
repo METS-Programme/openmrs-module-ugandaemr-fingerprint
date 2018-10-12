@@ -9,7 +9,7 @@
  */
 package org.openmrs.module.ugandaemrfingerprint;
 
-import com.google.gson.JsonObject;
+import org.json.JSONObject;
 import org.openmrs.annotation.Authorized;
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.module.ugandaemrfingerprint.core.Facility;
@@ -39,6 +39,6 @@ public interface UgandaEMRFingerprintService extends OpenmrsService{
 
     public boolean isUUID(String uuid);
 
-    public PatientInOtherFacility getPatientInOtherFacility(JsonObject jsonObject);
+    public PatientInOtherFacility getPatientInOtherFacility(JSONObject jsonObject);
 
 }
