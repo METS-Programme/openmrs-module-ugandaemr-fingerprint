@@ -3,7 +3,7 @@
 
     <groupId>org.openmrs.module</groupId>
     <artifactId>ugandaemrfingerprint</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.8-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>UgandaEMR FingerPrint Module</name>
     <description>Patient registration and search</description>
@@ -25,7 +25,7 @@
         <developerConnection>scm:git:https://github.com/METS-Programme/openmrs-module-ugandaemr-fingerprint.git
         </developerConnection>
         <url>https://github.com/METS-Programme/openmrs-module-ugandaemr-fingerprint.git</url>
-        <tag>1.0.7</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <modules>
