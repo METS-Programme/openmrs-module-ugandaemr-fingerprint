@@ -303,7 +303,7 @@
         <repository>
             <id>openmrs-repo-modules</id>
             <name>OpenMRS Modules</name>
-            <url>https://mavenrepo.openmrs.org/nexus/content/repositories/modules</url>
+            <url>https://mavenrepo.openmrs.org/nexus/content/repositories/modules/org/openmrs/module</url>
         </repository>
         <snapshotRepository>
             <id>openmrs-repo-snapshots</id>
