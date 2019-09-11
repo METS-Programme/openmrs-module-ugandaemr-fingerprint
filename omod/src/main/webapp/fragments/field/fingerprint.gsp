@@ -12,7 +12,6 @@
 <p>
     <label>
         ${config.label}
-        
     </label>
    <applet width="600" height="300" archive="finger-print-applet.jar" code="org.openmrs.module.ugandaemrfingerprint.applet.PatientEnrollmentApplet.class" codebase="/openmrs" name="fingerApplet">
 	    <param value="16" name="patientId"></param>
