@@ -14,7 +14,10 @@
                 "icon": "icon-hand-up",
                 "requiredPrivilege": "App: fingerprint.findPatient"
             }
-        ]
+        ],
+        "config": {
+            "registrationAppLink": "registrationapp/registerPatient.page?appId=aijar.registrationapp.registerPatient"
+        }
     },{
     "id": "fingerprint.statistic",
     "description": "Patient search by fingerprint that goes to the patient dashboard",
