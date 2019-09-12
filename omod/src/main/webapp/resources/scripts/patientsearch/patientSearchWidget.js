@@ -276,7 +276,8 @@ function PatientSearchWidget(configuration, searchOnline, searchString, url) {
                 var birthdate = '';
                 var actions = "";
                actions += config.messages.patientDashboardURL.replace("patientIdPlaceHolder", patient.uuid);
-               actions += config.messages.addPatientToQueueLink.replace("patientIdPlaceHolder", patient.uuid);
+               actions += config.messages.addPatientToQueueLink.replace("patientIdPlaceHolder", patient.uuid).replace("patientNamsePlaceHolder",patient.person.personName.display);
+               actions += config.messages.editPatientLink.replace("patientIdPlaceHolder", patient.uuid);
                 var widgetBirthdate = patient.person.birthdate;
                 if (patient.person.birthdate) {
                     birthdate = moment(patient.person.birthdate).format(configuration.dateFormat);
@@ -585,7 +586,8 @@ function PatientSearchWidget(configuration, searchOnline, searchString, url) {
             //fnDrawCallback is called on each page redraw so we need to remove any previous handlers
             //otherwise there will multiple hence the logic getting executed multiples times as the
             //user the goes back and forth between pages
-            tableObject.find('tbody tr').unbind('click');
+
+            /* tableObject.find('tbody tr').unbind('click');
             tableObject.find('tbody tr').unbind('hover');
 
             tableObject.find('tbody tr').click(
@@ -606,7 +608,7 @@ function PatientSearchWidget(configuration, searchOnline, searchString, url) {
                 }, function () {
                     highlightedMouseRowIndex = undefined;
                 }
-            );
+            );*/
 
             //ensure that the input never loses field whenever a user
             //e.g when user clicks the paging buttons

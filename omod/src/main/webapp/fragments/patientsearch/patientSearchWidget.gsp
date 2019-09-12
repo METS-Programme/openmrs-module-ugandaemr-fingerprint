@@ -61,6 +61,11 @@ body {
     border: 1px solid #dddddd;
 }
 
+#images img {
+    border-radius: 50px;
+    width: 30%
+}
+
 </style>
 <script type="text/javascript">
     var listableAttributeTypes = [];
@@ -80,10 +85,10 @@ body {
     }
 
     var handlePatientRowSelection = new handlePatientRowSelection();
-    var patientDashboardURL="<i class=\"icon-dashboard view-action\" title=\"Goto Patient Dashboard\" onclick=\" location.href = '/openmrs/coreapps/clinicianfacing/patient.page?patientId=patientIdPlaceHolder'\"></i>";
-    var addPatientToQueueLink="<i class=\"icon-tags edit-action\" title=\"Transfer To Another Provider\" onclick='patientqueue.showAddOrderToLabWorkLIstDialog(\"patientIdPlaceHolder\")'></i>";
-
-    var patientSearchWidget=null;
+    var patientDashboardURL = "<i style=\"font-size: 25px;\" class=\"icon-dashboard\" title=\"Goto Patient Dashboard\" onclick=\" location.href = '/openmrs/coreapps/clinicianfacing/patient.page?patientId=patientIdPlaceHolder'\"></i>";
+    var addPatientToQueueLink = "<a  data-toggle=\"modal\" data-target=\"#add_patient_to_queue_dialog\" data-patientid=\"patientIdPlaceHolder\" data-patientnames=\"patientNamsePlaceHolder\"><i style=\"font-size: 25px;\" data-target=\"#add_patient_to_queue_dialog\" class=\"icon-check\" title=\"Check In\" onclick='patientqueue.showAddOrderToLabWorkLIstDialog(\"patientIdPlaceHolder\")'></i></a>";
+    var editPatientLink = "<i style=\"font-size: 25px;\" class=\"icon-edit\" title=\"Edit Demographics\" onclick=\"location.href = '/openmrs/registrationapp/editSection.page?patientId=patientIdPlaceHolder&sectionId=demographics&appId=aijar.registrationapp.registerPatient&returnUrl=/openmrs/ugandaemrfingerprint/findpatient/findPatient.page?app=fingerprint.findPatient'\"></i>";
+    var patientSearchWidget = null;
     jq(function () {
         var widgetConfig = {
             initialPatients: lastViewedPatients,
@@ -112,6 +117,7 @@ body {
                 actionColHeader: 'Action',
                 patientDashboardURL: patientDashboardURL,
                 addPatientToQueueLink: addPatientToQueueLink,
+                editPatientLink: editPatientLink,
                 identifierColHeader: '${ ui.message("coreapps.search.identifier") }',
                 nameColHeader: '${ ui.message("coreapps.search.name") }',
                 genderColHeader: '${ ui.message("coreapps.gender") }',
@@ -175,6 +181,29 @@ body {
         document.getElementById("loader").style.display = "none";
         document.getElementById("myDiv").style.display = "block";
     }
+
+    jq(document).ready(function () {
+        jq('#add_patient_to_queue_dialog').on('show.bs.modal', function (event) {
+            var button = jq(event.relatedTarget);
+            var patientId = button.data('patientid');
+            var patientNames = button.data('patientnames');
+            var modal = jq(this)
+            modal.find("#patient_id").val(patientId);
+            modal.find("#checkin_patient_names").val(patientNames);
+        });
+
+        jq("#checkin").click(function () {
+            jq.get('${ ui.actionLink("ugandaemrfingerprint","checkIn","post") }', {
+                patientId: jq("#patient_id").val().trim().toLowerCase(),
+                locationId: jq("#location_id").val().trim().toLowerCase()
+            }, function (response) {
+                jq("#add_patient_to_queue_dialog").modal('hide');
+                if (!response) {
+                    ${ ui.message("coreapps.none ") }
+                }
+            });
+        });
+    });
 </script>
 
 <div class="card">
@@ -193,24 +222,15 @@ body {
                     </div>
 
                     <div class="center">
-                        <i id="patient-search-finger-print-button" class="medium icon-fingerprint"></i>
+                        <i id="patient-search-finger-print-button" onclick="search();"
+                           class="medium icon-fingerprint"></i>
                     </div>
+
+                    <div class="vertical"></div>
                 </div>
-
-                <div id="patient-search-finger-print" style="display:none;">
-                    <div id="calculationDiv">
-                        <button class="right" id="search" onclick="search();">Search</button>
-
-                        <p id="calResponse"></p>
-
-                        <div id="images"></div>
-                    </div>
-                </div>
-
-                <div class="vertical"></div>
             </div>
 
-            <div class="col col-lg-8" style="vertical-align: middle;">
+            <div class="col col-lg-6" style="vertical-align: middle;">
                 <form method="get" id="patient-search-form" onsubmit="return false">
                     <input type="text" id="patient-search"
                            placeholder="${ui.message("coreapps.findPatient.search.placeholder")}"
@@ -219,11 +239,22 @@ body {
                 </form>
             </div>
 
+            <div class="col col-lg-2">
+                <div id="patient-search-finger-print" style="display:none;">
+                    <div id="calculationDiv">
+                        <p id="calResponse"></p>
+
+                        <div id="images"></div>
+                    </div>
+                </div>
+            </div>
+
             <div class="col col-lg-2 right">
                 <div class="center">
                     <% if (registrationAppLink ?: false) { %>
-                    <span style="width: 40%;text-align:center;margin-left: 52px;"><a id="patient-search-register-patient" href="/${contextPath}/${registrationAppLink}"><i
-                        class="icon-plus-sign medium"></i><br/></a></span>
+                    <span style="width: 40%;text-align:center;margin-left: 52px;"><a
+                            id="patient-search-register-patient" href="/${contextPath}/${registrationAppLink}"><i
+                                class="icon-plus-sign medium"></i><br/></a></span>
                     <span style="width:100%; text-align:center">Create New Patient</span>
                     <% } %>
                 </div>
@@ -232,7 +263,7 @@ body {
     </div>
 </div>
 
-${ui.includeFragment("patientqueueing", "addPatientToQueue")}
+${ui.includeFragment("ugandaemrfingerprint", "checkIn")}
 
 
 <div id="patient-search-results"></div>
