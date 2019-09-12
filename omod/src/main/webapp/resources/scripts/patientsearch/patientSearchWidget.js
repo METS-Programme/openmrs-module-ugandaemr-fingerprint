@@ -275,8 +275,8 @@ function PatientSearchWidget(configuration, searchOnline, searchString, url) {
             _.each(results, function (patient) {
                 var birthdate = '';
                 var actions = "";
-               actions += config.messages.patientDashboardURL.replace("patientIdPlaceHolder", patient.uuid);
                actions += config.messages.addPatientToQueueLink.replace("patientIdPlaceHolder", patient.uuid).replace("patientNamsePlaceHolder",patient.person.personName.display);
+               actions += config.messages.patientDashboardURL.replace("patientIdPlaceHolder", patient.uuid);
                actions += config.messages.editPatientLink.replace("patientIdPlaceHolder", patient.uuid);
                 var widgetBirthdate = patient.person.birthdate;
                 if (patient.person.birthdate) {
