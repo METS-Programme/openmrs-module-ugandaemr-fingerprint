@@ -9,9 +9,9 @@
                 "id": "coreapps.activeVisitsHomepageLink",
                 "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
                 "type": "link",
-                "label": "Find Patient by FingerPrint",
+                "label": "Find Patient",
                 "url": "ugandaemrfingerprint/findpatient/findPatient.page?app=fingerprint.findPatient",
-                "icon": "icon-hand-up",
+                "icon": "icon-search",
                 "requiredPrivilege": "App: fingerprint.findPatient"
             }
         ],

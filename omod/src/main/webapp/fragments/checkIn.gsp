@@ -10,6 +10,7 @@
         var divToPrint = document.getElementById(divIdToPrint);
         var newWin = window.open('', 'Print-Window');
         var checkInData = "";
+        jq("#check_in_receipt").html("");
         if (dataToPrint.patientTriageQueue !== "") {
             checkInData += "<table>";
             checkInData += "<tr><th width=\"50%\" style=\"text-align: left\">Check In Date:</th><td>%s</td></tr>".replace("%s", dataToPrint.patientTriageQueue.dateCreated);
