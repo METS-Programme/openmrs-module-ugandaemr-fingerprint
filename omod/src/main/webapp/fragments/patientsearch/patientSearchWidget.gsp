@@ -21,10 +21,10 @@ img {
 
 .vertical {
     border-left: 1px solid #c7c5c5;
-    height: 80px;
+    height: 70px;
     position: absolute;
-    left: 99%;
-    top: -8%;
+    left: 106%;
+    top: 0%;
 }
 
 .card-body {
@@ -211,28 +211,21 @@ body {
 <div class="card">
     <div class="card-body">
         <div class="row">
-            <div class="col">
-                <label style="color: maroon;font-weight: bold">Find Patient</label>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col col-lg-2">
-                <div class="right">
-                    <div>
-                        <label>Fingerprint</label>
+            <div class="col col-lg-1">
+                <div>
+                    <div class="left">
+                        <label style="color: maroon">Fingerprint</label>
                     </div>
 
-                    <div class="center">
+                    <div class="center" style="margin-left: 22px;">
                         <i id="patient-search-finger-print-button" onclick="search();"
                            class="medium icon-fingerprint"></i>
                     </div>
-
                     <div class="vertical"></div>
                 </div>
             </div>
 
-            <div class="col col-lg-6" style="vertical-align: middle;">
+            <div class="col col-lg-8" style="vertical-align: middle;">
                 <form method="get" id="patient-search-form" onsubmit="return false">
                     <input type="text" id="patient-search"
                            placeholder="${ui.message("coreapps.findPatient.search.placeholder")}"
@@ -241,7 +234,7 @@ body {
                 </form>
             </div>
 
-            <div class="col col-lg-2">
+            <div class="col col-lg-1">
                 <div id="patient-search-finger-print" style="display:none;">
                     <div id="calculationDiv">
                         <p id="calResponse"></p>
