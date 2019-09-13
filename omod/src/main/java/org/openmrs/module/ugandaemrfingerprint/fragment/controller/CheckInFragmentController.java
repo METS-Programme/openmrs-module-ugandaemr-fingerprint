@@ -62,7 +62,7 @@ public class CheckInFragmentController {
             QuickVisitFragmentController quickVisitFragmentController = new QuickVisitFragmentController();
             quickVisitFragmentController.create((AdtService) Context.getService(AdtService.class), Context.getVisitService(), patient, location, uiUtils, getFacilityVisitType(), uiSessionContext, request);
         }
-        simpleObject.put("patientQueue",objectMapper.writeValueAsString(mapPatientQueueToMapper(patientQueue)));
+        simpleObject.put("patientTriageQueue",objectMapper.writeValueAsString(mapPatientQueueToMapper(patientQueue)));
         return simpleObject;
 
     }
