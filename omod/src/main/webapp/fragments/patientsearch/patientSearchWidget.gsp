@@ -68,6 +68,8 @@ body {
 
 </style>
 <script type="text/javascript">
+    var myVar;
+    var stompClient = null;
     var listableAttributeTypes = [];
     <% listingAttributeTypeNames.each { %>
     listableAttributeTypes.push('${ ui.encodeHtml(it) }');
@@ -98,6 +100,9 @@ body {
             breadcrumbOverride: '${ ui.escapeJs(breadcrumbOverride) }',
             searchDelayShort: ${ searchDelayShort },
             searchDelayLong: ${ searchDelayLong },
+            searchOnline: ${searchOnline},
+            onlinesearchString: "${simpleNationalIdString.replace('"', '\\"')}",
+            onlineSearchURL: "${connectionProtocol+onlineIpAddress+queryURL}",
             handleRowSelection: ${ config.rowSelectionHandler ?: "handlePatientRowSelection" },
             dateFormat: '${ dateFormatJS }',
             locale: '${ locale }',
@@ -127,14 +132,8 @@ body {
                 ageInDays: '${ ui.message("coreapps.age.days") }'
             }
         };
-        var searchString = "${simpleNationalIdString.replace('"', '\\"')}";
-        patientSearchWidget = new PatientSearchWidget(widgetConfig, ${searchOnline}, searchString, "${connectionProtocol+onlineIpAddress+queryURL}");
+        patientSearchWidget = new PatientSearchWidget(widgetConfig);
     });
-</script>
-<script type="text/javascript">
-    var myVar;
-
-    var stompClient = null;
 
     var socket = new SockJS('${fingerSocketPrintIpAddress}/search');
     stompClient = Stomp.over(socket);
@@ -159,7 +158,7 @@ body {
             imageTag.src = "data:image/png;base64," + message.result;
             imageDiv.appendChild(imageTag);
         } else if (message.type === "local" && message.patient !== "") {
-            window.location = "../../coreapps/clinicianfacing/patient.page?patientId=" + message.patient;
+            patientSearchWidget.searchByFingerPrint(message.patient);
         } else if (message.type === "online" && message.patient !== "" && ${searchOnline} === true) {
             window.location = "/openmrs/ugandaemrfingerprint/patientInOtherFacility.page?patientId=" + message.patient;
         } else if (message.type === null && (message.patient === null || message.patient === "") && ${searchOnline} === true) {
@@ -198,7 +197,7 @@ body {
                 locationId: jq("#location_id").val().trim().toLowerCase()
             }, function (response) {
                 var responseData = JSON.parse(response.replace("patientTriageQueue=", "\"patientTriageQueue\":").trim())
-                printTriageRecord("printSection",responseData);
+                printTriageRecord("printSection", responseData);
                 jq("#add_patient_to_queue_dialog").modal('hide');
                 if (!response) {
                     ${ ui.message("coreapps.none ") }
@@ -221,6 +220,7 @@ body {
                         <i id="patient-search-finger-print-button" onclick="search();"
                            class="medium icon-fingerprint"></i>
                     </div>
+
                     <div class="vertical"></div>
                 </div>
             </div>

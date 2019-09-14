@@ -1,4 +1,4 @@
-function PatientSearchWidget(configuration, searchOnline, searchString, url) {
+function PatientSearchWidget(configuration) {
     var defaults = {
         minSearchCharacters: 3,
         searchInputId: 'patient-search',
@@ -186,6 +186,35 @@ function PatientSearchWidget(configuration, searchOnline, searchString, url) {
 
     }
 
+    var searchOnUUID = function (uuid) {
+
+        if (!jq('#' + config.searchResultsDivId).is(':visible')) {
+            jq('#' + config.searchResultsDivId).show();
+        }
+
+        var deferredList = [];
+
+
+        var deferred = emr.getJSON(searchUrl + "/" + uuid,{v:customRep})
+            .then(function (data) {
+                updateSearchResults([data]);
+            })
+        deferredList.push(deferred);
+
+        // after all the getJSON calls are complete
+        jq.when.apply(null, deferredList)
+            .done(function () {
+                if (searchResultsData.length == 0) {
+                    displayNoMatchesFound();
+                }
+            })
+            .fail(function (jqXHR) {
+                failSearch();   // TODO is this what we want here?
+            });
+
+    }
+    this.searchOnUUID = searchOnUUID;
+
     var searchOnExactIdentifierMatchThenIdentifierAndName = function (query, currRequestCount, autoSelectIfExactIdentifierMatch) {
         emr.getJSON(searchUrl, {identifier: query, v: customRep})
             .done(function (data) {
@@ -195,9 +224,9 @@ function PatientSearchWidget(configuration, searchOnline, searchString, url) {
                     if (autoSelectIfExactIdentifierMatch && data.results.length == 1) {
                         selectRow(0);
                     }
-                } else if (data.results.length <= 0 && (currRequestCount || currRequestCount < requestCount) && query.replace(/\(|\)|\s+|-/g, "").match(/^$|^[A-Z][FM]\d{5}([A-Z0-9]){7}$/) && searchOnline) {
+                } else if (data.results.length <= 0 && (currRequestCount || currRequestCount < requestCount) && query.replace(/\(|\)|\s+|-/g, "").match(/^$|^[A-Z][FM]\d{5}([A-Z0-9]){7}$/) && config.searchOnline) {
                     if (navigator.onLine) {
-                        jq.post(url, {query: searchString.replace("%s", query)},
+                        jq.post(config.onlineSearchURL, {query: config.onlinesearchString.replace("%s", query)},
                             function (response) {
                                 if (response && response.data.patient !== null) {
                                     jq().toastmessage('showSuccessToast', "Patient Found");
@@ -275,9 +304,9 @@ function PatientSearchWidget(configuration, searchOnline, searchString, url) {
             _.each(results, function (patient) {
                 var birthdate = '';
                 var actions = "";
-               actions += config.messages.addPatientToQueueLink.replace("patientIdPlaceHolder", patient.uuid).replace("patientNamsePlaceHolder",patient.person.personName.display);
-               actions += config.messages.patientDashboardURL.replace("patientIdPlaceHolder", patient.uuid);
-               actions += config.messages.editPatientLink.replace("patientIdPlaceHolder", patient.uuid);
+                actions += config.messages.addPatientToQueueLink.replace("patientIdPlaceHolder", patient.uuid).replace("patientNamsePlaceHolder", patient.person.display);
+                actions += config.messages.patientDashboardURL.replace("patientIdPlaceHolder", patient.uuid);
+                actions += config.messages.editPatientLink.replace("patientIdPlaceHolder", patient.uuid);
                 var widgetBirthdate = patient.person.birthdate;
                 if (patient.person.birthdate) {
                     birthdate = moment(patient.person.birthdate).format(configuration.dateFormat);
@@ -324,7 +353,8 @@ function PatientSearchWidget(configuration, searchOnline, searchString, url) {
             });
         } else if (config.initialPatients) {
             //show the recently viewed
-            searchResultsData = initialPatientData;dataRows = initialData;
+            searchResultsData = initialPatientData;
+            dataRows = initialData;
         }
 
         dTable.fnAddData(dataRows);
@@ -339,8 +369,13 @@ function PatientSearchWidget(configuration, searchOnline, searchString, url) {
         }
         afterSearchResultsUpdated = [];
     }
+
     this.updateSearchResults = updateSearchResults;
 
+    var searchByFingerPrint = function (uuid) {
+        searchOnUUID(uuid);
+    }
+    this.searchByFingerPrint = searchByFingerPrint;
 
     // remove any patients from a results list that are already in the search results
     // this is necessary because the searchOnIdentifiers performs multiple searchs and could return duplicates
@@ -715,6 +750,13 @@ function PatientSearchWidget(configuration, searchOnline, searchString, url) {
         var args = Array.from(arguments);
         args.shift();
         searchOnIdentifiers(args);
+    })
+
+    jq('#patient-fingerprint-uuid').on('search:uuid', function (event) {
+        // I'm gathering the arguments this way because function(event, identifiers) wasn't working because it appeared that the passed-in array was being "spread" and "identifiers" was only getting set to the first element in the array
+        var args = Array.from(arguments);
+        args.shift();
+        searchOnUUID(args);
     })
 
     jq('#patient-search-form').on('search:no-matches', function (event, identifier) {
