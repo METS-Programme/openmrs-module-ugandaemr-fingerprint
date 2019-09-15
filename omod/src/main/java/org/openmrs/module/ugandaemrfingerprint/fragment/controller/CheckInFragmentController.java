@@ -3,10 +3,7 @@ package org.openmrs.module.ugandaemrfingerprint.fragment.controller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.openmrs.Location;
-import org.openmrs.Patient;
-import org.openmrs.Provider;
-import org.openmrs.VisitType;
+import org.openmrs.*;
 import org.openmrs.api.LocationService;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
@@ -24,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CheckInFragmentController {
@@ -43,16 +42,17 @@ public class CheckInFragmentController {
         pageModel.put("providerList", Context.getProviderService().getAllProviders(false));
     }
 
-    public SimpleObject post(@SpringBean("patientService") PatientService patientService, @RequestParam(value = "patientId") Patient patient, @RequestParam(value = "providerId", required = false) Provider provider, UiUtils ui, @RequestParam("locationId") Location location, @RequestParam(value = "returnUrl", required = false) String returnUrl, UiSessionContext uiSessionContext, UiUtils uiUtils, HttpServletRequest request) throws IOException {
+    public SimpleObject post(@SpringBean("patientService") PatientService patientService, @RequestParam(value = "patientId") Patient patient, @RequestParam(value = "providerId", required = false) Provider provider, UiUtils ui, @RequestParam("locationId") Location location, @RequestParam(value = "returnUrl", required = false) String returnUrl, UiSessionContext uiSessionContext, UiUtils uiUtils, HttpServletRequest request) throws IOException, ParseException {
         PatientQueue patientQueue = new PatientQueue();
         PatientQueueingService patientQueueingService = Context.getService(PatientQueueingService.class);
         ObjectMapper objectMapper = new ObjectMapper();
-        SimpleObject simpleObject=new SimpleObject();
+        SimpleObject simpleObject = new SimpleObject();
 
         patientQueue.setLocationFrom(uiSessionContext.getSessionLocation());
         patientQueue.setPatient(patient);
         patientQueue.setLocationTo(location);
         patientQueue.setProvider(provider);
+        patientQueue.setQueueNumber(patientQueueingService.generateQueueNumber(location));
         patientQueue.setStatus("pending");
         patientQueue.setCreator(uiSessionContext.getCurrentUser());
         patientQueue.setDateCreated(new Date());
@@ -62,7 +62,7 @@ public class CheckInFragmentController {
             QuickVisitFragmentController quickVisitFragmentController = new QuickVisitFragmentController();
             quickVisitFragmentController.create((AdtService) Context.getService(AdtService.class), Context.getVisitService(), patient, location, uiUtils, getFacilityVisitType(), uiSessionContext, request);
         }
-        simpleObject.put("patientTriageQueue",objectMapper.writeValueAsString(mapPatientQueueToMapper(patientQueue)));
+        simpleObject.put("patientTriageQueue", objectMapper.writeValueAsString(mapPatientQueueToMapper(patientQueue)));
         return simpleObject;
 
     }
@@ -82,10 +82,16 @@ public class CheckInFragmentController {
             patientQueueMapper.setPatientId(patientQueue.getPatient().getPatientId());
             patientQueueMapper.setLocationFrom(patientQueue.getLocationFrom().getName());
             patientQueueMapper.setLocationTo(patientQueue.getLocationTo().getName());
-            if(patientQueue.getProvider()!=null) {
+            if (patientQueue.getProvider() != null) {
                 patientQueueMapper.setProviderNames(patientQueue.getProvider().getName());
             }
+
+            if (patientQueue.getCreator() != null) {
+                patientQueueMapper.setCreatorNames(patientQueue.getCreator().getPersonName().getFullName());
+            }
             patientQueueMapper.setStatus(patientQueue.getStatus());
+            patientQueueMapper.setQueueNumber(patientQueue.getQueueNumber());
+            patientQueueMapper.setGender(patientQueue.getPatient().getGender());
             patientQueueMapper.setAge(patientQueue.getPatient().getAge().toString());
             patientQueueMapper.setDateCreated(patientQueue.getDateCreated().toString());
         }
