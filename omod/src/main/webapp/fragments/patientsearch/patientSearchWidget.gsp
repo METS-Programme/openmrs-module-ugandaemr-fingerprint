@@ -194,7 +194,11 @@ body {
         jq("#checkin").click(function () {
             jq.get('${ ui.actionLink("ugandaemrfingerprint","checkIn","post") }', {
                 patientId: jq("#patient_id").val().trim().toLowerCase(),
-                locationId: jq("#location_id").val().trim().toLowerCase()
+                locationId: jq("#location_id").val().trim().toLowerCase(),
+                locationFromId: jq("#location_from_id").val().trim().toLowerCase(),
+                providerId: jq("#provider_id").val().trim().toLowerCase(),
+                patientStatus: jq("#patient_status").val().trim().toLowerCase(),
+                visitComment: jq("#visit_comment").val().trim().toLowerCase()
             }, function (response) {
                 var responseData = JSON.parse(response.replace("patientTriageQueue=", "\"patientTriageQueue\":").trim())
                 printTriageRecord("printSection", responseData);

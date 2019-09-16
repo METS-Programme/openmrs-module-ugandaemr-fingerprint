@@ -42,17 +42,33 @@ public class CheckInFragmentController {
         pageModel.put("providerList", Context.getProviderService().getAllProviders(false));
     }
 
-    public SimpleObject post(@SpringBean("patientService") PatientService patientService, @RequestParam(value = "patientId") Patient patient, @RequestParam(value = "providerId", required = false) Provider provider, UiUtils ui, @RequestParam("locationId") Location location, @RequestParam(value = "returnUrl", required = false) String returnUrl, UiSessionContext uiSessionContext, UiUtils uiUtils, HttpServletRequest request) throws IOException, ParseException {
+    public SimpleObject post(@SpringBean("patientService") PatientService patientService, @RequestParam(value = "patientId") Patient patient, @RequestParam(value = "providerId", required = false) Provider provider, @RequestParam("locationId") Location location, @RequestParam(value = "locationFromId", required = false) Location locationFrom, @RequestParam(value = "patientStatus", required = false) String patientStatus, @RequestParam(value = "visitComment", required = false) String visitComment, @RequestParam(value = "returnUrl", required = false) String returnUrl, UiSessionContext uiSessionContext, UiUtils uiUtils, HttpServletRequest request) throws IOException, ParseException {
         PatientQueue patientQueue = new PatientQueue();
         PatientQueueingService patientQueueingService = Context.getService(PatientQueueingService.class);
         ObjectMapper objectMapper = new ObjectMapper();
         SimpleObject simpleObject = new SimpleObject();
+        Location currentLocation = new Location();
 
-        patientQueue.setLocationFrom(uiSessionContext.getSessionLocation());
+        if (locationFrom != null) {
+            currentLocation = locationFrom;
+
+        } else {
+            currentLocation = uiSessionContext.getSessionLocation();
+        }
+
+        if (patientStatus != null && patientStatus.equals("emergency")) {
+            patientQueue.setPriority(0);
+            patientQueue.setPriorityComment(patientStatus);
+        }
+
+        if (visitComment != null) {
+            patientQueue.setComment(visitComment);
+        }
+        patientQueue.setLocationFrom(currentLocation);
         patientQueue.setPatient(patient);
         patientQueue.setLocationTo(location);
         patientQueue.setProvider(provider);
-        patientQueue.setQueueNumber(patientQueueingService.generateQueueNumber(location));
+        patientQueue.setQueueNumber(patientQueueingService.generateQueueNumber(currentLocation));
         patientQueue.setStatus("pending");
         patientQueue.setCreator(uiSessionContext.getCurrentUser());
         patientQueue.setDateCreated(new Date());
@@ -64,7 +80,6 @@ public class CheckInFragmentController {
         }
         simpleObject.put("patientTriageQueue", objectMapper.writeValueAsString(mapPatientQueueToMapper(patientQueue)));
         return simpleObject;
-
     }
 
     private VisitType getFacilityVisitType() {

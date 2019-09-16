@@ -2,8 +2,22 @@
     ui.includeJavascript("patientqueueing", "patientqueue.js")
 %>
 
-<script type="text/javascript">
+<script>
     jq(document).ready(function () {
+        jq("#provider_id_container").addClass('hidden');
+        jq("#patient_status_container").addClass('hidden');
+        jq("#visit_comment_container").addClass('hidden');
+        jq("#location_id").change(function () {
+            if (jq("#location_id").val() !== "ff01eaab-561e-40c6-bf24-539206b521ce") {
+                jq("#provider_id_container").removeClass('hidden');
+                jq("#patient_status_container").removeClass('hidden');
+                jq("#visit_comment_container").removeClass('hidden');
+            } else {
+                jq("#provider_id_container").addClass('hidden');
+                jq("#patient_status_container").addClass('hidden');
+                jq("#visit_comment_container").addClass('hidden');
+            }
+        });
     });
 
     function printTriageRecord(divIdToPrint, dataToPrint) {
@@ -15,9 +29,9 @@
             checkInData += "<table>";
             checkInData += "<tr><th width=\"50%\" style=\"text-align: left\">Check In Date:</th><td>%s</td></tr>".replace("%s", dataToPrint.patientTriageQueue.dateCreated);
             checkInData += "<tr><th width=\"50%\" style=\"text-align: left\">Patient Names:</th><td>%s</td></tr>".replace("%s", dataToPrint.patientTriageQueue.patientNames);
-            checkInData += "<tr><th width=\"50%\" style=\"text-align: left\">Visit No.:</th><td>%s</td></tr>".replace("%s", dataToPrint.patientTriageQueue.queueNumber.substring(11));
+            checkInData += "<tr><th width=\"50%\" style=\"text-align: left\">Visit No.:</th><td>%s</td></tr>".replace("%s", dataToPrint.patientTriageQueue.queueNumber.substring(15));
             checkInData += "<tr><th width=\"50%\" style=\"text-align: left\">Gender:</th><td>%s</td></tr>".replace("%s", dataToPrint.patientTriageQueue.gender);
-            checkInData += "<tr><th width=\"50%\" style=\"text-align: left\">Entry Point:</th><td>%s</td></tr>".replace("%s", dataToPrint.patientTriageQueue.locationFrom.substring(0,3));
+            checkInData += "<tr><th width=\"50%\" style=\"text-align: left\">Entry Point:</th><td>%s</td></tr>".replace("%s", dataToPrint.patientTriageQueue.locationFrom.substring(0, 3));
             checkInData += "<tr><th width=\"50%\" style=\"text-align: left\">Registration Attendant:</th><td>%s</td></tr>".replace("%s", dataToPrint.patientTriageQueue.creatorNames);
             checkInData += "</table>";
         }
@@ -59,29 +73,110 @@ hr.printhr {
             </div>
 
             <div class="modal-body">
-                <span id="add_to_queue-container">
+                <div class="container">
+                    <input type="hidden" id="patient_id" name="patient_id" value="">
 
-                </span>
-                <input type="hidden" id="patient_id" name="patient_id" value="">
+                    <div class="row">
+                        <div class="col-4">Entry Point:</div>
 
-                <div class="form-group">
-                    <label for="location_id">${ui.message("patientqueueing.location.label")}</label>
-                    <select class="form-control" id="location_id" name="location_id">
-                        <option value="">${ui.message("patientqueueing.location.selectTitle")}</option>
-                        <% if (locationList != null) {
-                            locationList.each { %>
-                        <option value="${it.uuid}">${it.name}</option>
-                        <%
-                                }
-                            }
-                        %>
-                    </select>
-                    <span class="field-error" style="display: none;"></span>
-                    <% if (locationList == null) { %>
-                    <div><${ui.message("patientqueueing.select.error")}</div>
-                    <% } %>
+                        <div class="col-8">
+                            <div class="form-group">
+                                <select class="form-control" id="location_from_id" name="location_from_id">
+                                    <option value="">Select Entry Point</option>
+                                    <% if (locationList != null) {
+                                        locationList.each { %>
+                                    <option value="${it.uuid}">${it.name}</option>
+                                    <%
+                                            }
+                                        }
+                                    %>
+                                </select>
+                                <span class="field-error" style="display: none;"></span>
+                                <% if (locationList == null) { %>
+                                <div><${ui.message("patientqueueing.select.error")}</div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-5">Next Service Point:</div>
+
+                        <div class="col-7">
+                            <div class="form-group">
+                                <select class="form-control" id="location_id" name="location_id">
+                                    <option value="">Select Next Service Point</option>
+                                    <% if (locationList != null) {
+                                        locationList.each { %>
+                                    <option value="${it.uuid}">${it.name}</option>
+                                    <%
+                                            }
+                                        }
+                                    %>
+                                </select>
+                                <span class="field-error" style="display: none;"></span>
+                                <% if (locationList == null) { %>
+                                <div><${ui.message("patientqueueing.select.error")}</div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" id="provider_id_container">
+                        <div class="col-5">Provider:</div>
+
+                        <div class="col-7">
+                            <div class="form-group">
+                                <select class="form-control" id="provider_id" name="provider_id">
+                                    <option value="">Select Provider</option>
+                                    <% if (providerList != null) {
+                                        providerList.each { %>
+                                    <option value="${it.providerId}">${it.name}</option>
+                                    <%
+                                            }
+                                        }
+                                    %>
+                                </select>
+                                <span class="field-error" style="display: none;"></span>
+                                <% if (providerList == null) { %>
+                                <div><${ui.message("patientqueueing.select.error")}</div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" id="patient_status_container">
+                        <div class="col-4">Patient Status:</div>
+
+                        <div class="col-8">
+                            <div class="form-group">
+                                <select class="form-control" id="patient_status" name="patient_status">
+                                    <option value="">Select Patient Status</option>
+                                    <option value="normal">Normal</option>
+                                    <option value="emergency">Emergency</option>
+                                </select>
+                                <span class="field-error" style="display: none;"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" id="visit_comment_container">
+                        <div class="col-4">Visit Type:</div>
+
+                        <div class="col-8">
+                            <div class="form-group">
+                                <select class="form-control" id="visit_comment" name="visit_comment">
+                                    <option value="">Select Visit Type</option>
+                                    <option value="new visit">New Visit</option>
+                                    <option value="revisit">Revisit</option>
+                                </select>
+                                <span class="field-error" style="display: none;"></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
 
             <div class="modal-footer form">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
