@@ -73,11 +73,6 @@
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>dataexchange-api</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.metaparadigm</groupId>
-			<artifactId>json-rpc</artifactId>
-			<version>1.0</version>
-		</dependency>
 		<!--End FingerPrint Device -->
 	</dependencies>
 	

@@ -73,11 +73,6 @@ public class CheckInFragmentController {
         patientQueue.setCreator(uiSessionContext.getCurrentUser());
         patientQueue.setDateCreated(new Date());
         patientQueueingService.savePatientQue(patientQueue);
-
-        if (Context.getVisitService().getActiveVisitsByPatient(patient).size() <= 0) {
-            QuickVisitFragmentController quickVisitFragmentController = new QuickVisitFragmentController();
-            quickVisitFragmentController.create((AdtService) Context.getService(AdtService.class), Context.getVisitService(), patient, location, uiUtils, getFacilityVisitType(), uiSessionContext, request);
-        }
         simpleObject.put("patientTriageQueue", objectMapper.writeValueAsString(mapPatientQueueToMapper(patientQueue)));
         return simpleObject;
     }

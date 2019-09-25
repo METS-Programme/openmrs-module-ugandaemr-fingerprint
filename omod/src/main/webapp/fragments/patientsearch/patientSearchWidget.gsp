@@ -87,8 +87,8 @@ body {
     }
 
     var handlePatientRowSelection = new handlePatientRowSelection();
-    var patientDashboardURL = "<i style=\"font-size: 25px;\" class=\"icon-file-alt\" title=\"Goto Patient Dashboard\" onclick=\" location.href = '/openmrs/coreapps/clinicianfacing/patient.page?patientId=patientIdPlaceHolder'\"></i>";
     var addPatientToQueueLink = "<a  data-toggle=\"modal\" data-target=\"#add_patient_to_queue_dialog\" data-patientid=\"patientIdPlaceHolder\" data-patientnames=\"patientNamsePlaceHolder\"><i style=\"font-size: 25px;\" data-target=\"#add_patient_to_queue_dialog\" class=\"icon-share\" title=\"Check In\" onclick='patientqueue.showAddOrderToLabWorkLIstDialog(\"patientIdPlaceHolder\")'></i></a>";
+    var patientDashboardURL = "<i style=\"font-size: 25px;\" class=\"icon-file-alt\" title=\"Goto Patient Dashboard\" onclick=\" location.href = '/openmrs/coreapps/clinicianfacing/patient.page?patientId=patientIdPlaceHolder'\"></i>";
     var editPatientLink = "<i style=\"font-size: 25px;\" class=\"icon-edit\" title=\"Edit Demographics\" onclick=\"location.href = '/openmrs/registrationapp/editSection.page?patientId=patientIdPlaceHolder&sectionId=demographics&appId=aijar.registrationapp.registerPatient&returnUrl=/openmrs/ugandaemrfingerprint/findpatient/findPatient.page?app=fingerprint.findPatient'\"></i>";
     var patientSearchWidget = null;
     jq(function () {
