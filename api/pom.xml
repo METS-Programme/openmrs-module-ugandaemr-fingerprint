@@ -74,9 +74,8 @@
 			<artifactId>dataexchange-api</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.metaparadigm</groupId>
-			<artifactId>json-rpc</artifactId>
-			<version>1.0</version>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
 		</dependency>
 		<!--End FingerPrint Device -->
 	</dependencies>

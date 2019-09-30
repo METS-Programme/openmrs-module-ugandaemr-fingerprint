@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.text.ParseException;
 
 /**
  * Created by Lubwama Samuel on 26/01/2016.
@@ -29,22 +28,16 @@ public class PatientInOtherFacilityFragmentController {
     private static final Log log = LogFactory.getLog(PatientInOtherFacilityFragmentController.class);
 
 
-    public void controller(FragmentModel model, UiSessionContext sessionContext,
-                           HttpServletRequest request,
-                           @SpringBean("adminService") AdministrationService administrationService,
-                           @FragmentParam(value = "showLastViewedPatients", required = false) Boolean showLastViewedPatients,
-                           @FragmentParam(value = "initialSearchFromParameter", required = false) java.lang.String searchByParam) {
+    public void controller(FragmentModel model, UiSessionContext sessionContext, HttpServletRequest request, @SpringBean("adminService") AdministrationService administrationService, @FragmentParam(value = "showLastViewedPatients", required = false) Boolean showLastViewedPatients, @FragmentParam(value = "initialSearchFromParameter", required = false) java.lang.String searchByParam) {
     }
 
 
     public SimpleObject processPatientEncounters(FragmentModel model, @RequestParam(value = "patientData", required = false) java.lang.String patientData, UiUtils ui) throws IOException {
 
-        JSONObject jsonObj=new JSONObject();
-        try {
-            jsonObj = new JSONObject(patientData);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        JSONObject jsonObj = new JSONObject();
+
+        jsonObj = new JSONObject(patientData);
+
         ObjectMapper objectMapper = new ObjectMapper();
 
         SimpleObject simpleObject = new SimpleObject();
