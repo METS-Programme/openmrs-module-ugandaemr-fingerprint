@@ -4,18 +4,18 @@
 
 <script>
     jq(document).ready(function () {
-        jq("#provider_id_container").addClass('hidden');
-        jq("#patient_status_container").addClass('hidden');
-        jq("#visit_comment_container").addClass('hidden');
+        jq("#provider_id_container").hide();
+        jq("#patient_status_container").hide();
+        jq("#visit_comment_container").hide();
         jq("#location_id").change(function () {
             if (jq("#location_id").val() !== "ff01eaab-561e-40c6-bf24-539206b521ce") {
-                jq("#provider_id_container").removeClass('hidden');
-                jq("#patient_status_container").removeClass('hidden');
-                jq("#visit_comment_container").removeClass('hidden');
+                jq("#provider_id_container").show()
+                jq("#patient_status_container").show()
+                jq("#visit_comment_container").show()
             } else {
-                jq("#provider_id_container").addClass('hidden');
-                jq("#patient_status_container").addClass('hidden');
-                jq("#visit_comment_container").addClass('hidden');
+                jq("#provider_id_container").hide();
+                jq("#patient_status_container").hide();
+                jq("#visit_comment_container").hide();
             }
         });
     });
@@ -122,36 +122,13 @@ hr.printhr {
                         </div>
                     </div>
 
-                    <div class="row" id="provider_id_container">
-                        <div class="col-5">Provider:</div>
-
-                        <div class="col-7">
-                            <div class="form-group">
-                                <select class="form-control" id="provider_id" name="provider_id">
-                                    <option value="">Select Provider</option>
-                                    <% if (providerList != null) {
-                                        providerList.each { %>
-                                    <option value="${it.providerId}">${it.name}</option>
-                                    <%
-                                            }
-                                        }
-                                    %>
-                                </select>
-                                <span class="field-error" style="display: none;"></span>
-                                <% if (providerList == null) { %>
-                                <div><${ui.message("patientqueueing.select.error")}</div>
-                                <% } %>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="row" id="patient_status_container">
-                        <div class="col-4">Patient Status:</div>
+                        <div class="col-4">Urgency of Care:</div>
 
                         <div class="col-8">
                             <div class="form-group">
                                 <select class="form-control" id="patient_status" name="patient_status">
-                                    <option value="">Select Patient Status</option>
+                                    <option value="">Select Urgency of Care</option>
                                     <option value="normal">Normal</option>
                                     <option value="emergency">Emergency</option>
                                 </select>
