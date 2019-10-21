@@ -4,16 +4,13 @@
 
 <script>
     jq(document).ready(function () {
-        jq("#provider_id_container").hide();
         jq("#patient_status_container").hide();
         jq("#visit_comment_container").hide();
         jq("#location_id").change(function () {
             if (jq("#location_id").val() !== "ff01eaab-561e-40c6-bf24-539206b521ce") {
-                jq("#provider_id_container").show()
-                jq("#patient_status_container").show()
-                jq("#visit_comment_container").show()
+                jq("#patient_status_container").show();
+                jq("#visit_comment_container").show();
             } else {
-                jq("#provider_id_container").hide();
                 jq("#patient_status_container").hide();
                 jq("#visit_comment_container").hide();
             }
