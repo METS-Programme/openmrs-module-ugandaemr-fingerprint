@@ -68,8 +68,8 @@ public class CheckInFragmentController {
         patientQueue.setPatient(patient);
         patientQueue.setLocationTo(location);
         patientQueue.setProvider(provider);
-        patientQueue.setQueueNumber(patientQueueingService.generateQueueNumber(currentLocation));
-        patientQueue.setStatus("pending");
+        patientQueue.setVisitNumber(patientQueueingService.generateVisitNumber(currentLocation, patient));
+        patientQueue.setStatus(PatientQueue.Status.PENDING);
         patientQueue.setCreator(uiSessionContext.getCurrentUser());
         patientQueue.setDateCreated(new Date());
         patientQueueingService.savePatientQue(patientQueue);
@@ -99,8 +99,8 @@ public class CheckInFragmentController {
             if (patientQueue.getCreator() != null) {
                 patientQueueMapper.setCreatorNames(patientQueue.getCreator().getPersonName().getFullName());
             }
-            patientQueueMapper.setStatus(patientQueue.getStatus());
-            patientQueueMapper.setQueueNumber(patientQueue.getQueueNumber());
+            patientQueueMapper.setStatus(patientQueue.getStatus().name());
+            patientQueueMapper.setVisitNumber(patientQueue.getVisitNumber());
             patientQueueMapper.setGender(patientQueue.getPatient().getGender());
             patientQueueMapper.setAge(patientQueue.getPatient().getAge().toString());
             patientQueueMapper.setDateCreated(patientQueue.getDateCreated().toString());
