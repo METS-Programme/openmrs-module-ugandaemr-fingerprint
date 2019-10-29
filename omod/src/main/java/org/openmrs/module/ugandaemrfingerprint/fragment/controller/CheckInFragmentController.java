@@ -71,7 +71,7 @@ public class CheckInFragmentController {
         patientQueue.setStatus(PatientQueue.Status.PENDING);
         patientQueue.setCreator(uiSessionContext.getCurrentUser());
         patientQueue.setDateCreated(new Date());
-        patientQueueingService.assignVisitNumber(patientQueue);
+        patientQueueingService.assignVisitNumberForToday(patientQueue);
         patientQueueingService.savePatientQue(patientQueue);
         simpleObject.put("patientTriageQueue", objectMapper.writeValueAsString(mapPatientQueueToMapper(patientQueue)));
         return simpleObject;
