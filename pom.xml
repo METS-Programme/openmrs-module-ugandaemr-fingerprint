@@ -38,6 +38,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <emrapiVersion>1.11</emrapiVersion>
+        <jsonVersion>20160810</jsonVersion>
         <coreappsVersion>1.12.0</coreappsVersion>
         <appframeworkVersion>2.4</appframeworkVersion>
         <appuiVersion>1.7</appuiVersion>
@@ -74,7 +75,11 @@
                 <scope>compile</scope>
             </dependency>
             -->
-
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>${jsonVersion}</version>
+            </dependency>
 
             <!-- Begin OpenMRS core -->
             <!-- Importing versions from refapp distro -->
@@ -309,13 +314,13 @@
 
     <distributionManagement>
         <repository>
-            <id>central</id>
-            <name>openmrs-releases</name>
-            <url>https://openmrs.jfrog.io/openmrs/modules</url>
+            <id>openmrs-repo-modules</id>
+            <name>OpenMRS Modules</name>
+            <url>https://mavenrepo.openmrs.org/nexus/content/repositories/modules</url>
         </repository>
         <snapshotRepository>
-            <id>snapshots</id>
-            <name>openmrs-snapshots</name>
+            <id>openmrs-repo-snapshots</id>
+            <name>OpenMRS Snapshots</name>
             <url>https://openmrs.jfrog.io/openmrs/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
