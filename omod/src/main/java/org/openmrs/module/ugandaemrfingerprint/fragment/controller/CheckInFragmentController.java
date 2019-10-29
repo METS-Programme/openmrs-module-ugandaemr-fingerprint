@@ -3,15 +3,15 @@ package org.openmrs.module.ugandaemrfingerprint.fragment.controller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.openmrs.*;
+import org.openmrs.Location;
+import org.openmrs.Patient;
+import org.openmrs.Provider;
+import org.openmrs.VisitType;
 import org.openmrs.api.LocationService;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.appui.UiSessionContext;
-import org.openmrs.module.coreapps.fragment.controller.visit.QuickVisitFragmentController;
-import org.openmrs.module.emrapi.adt.AdtService;
 import org.openmrs.module.patientqueueing.api.PatientQueueingService;
-import org.openmrs.module.patientqueueing.mapper.PatientQueueMapper;
 import org.openmrs.module.patientqueueing.model.PatientQueue;
 import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.ui.framework.UiUtils;
@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CheckInFragmentController {
@@ -62,8 +61,10 @@ public class CheckInFragmentController {
         }
 
         if (visitComment != null) {
-            patientQueue.setComment(visitComment);
+            //patientQueue.setComment(visitComment);
         }
+
+        String names = patientQueue.getPatient().getFamilyName() + " " + patientQueue.getPatient().getGivenName() + " " + patientQueue.getPatient().getMiddleName();
         patientQueue.setLocationFrom(currentLocation);
         patientQueue.setPatient(patient);
         patientQueue.setLocationTo(location);
@@ -73,38 +74,13 @@ public class CheckInFragmentController {
         patientQueue.setDateCreated(new Date());
         patientQueueingService.assignVisitNumberForToday(patientQueue);
         patientQueueingService.savePatientQue(patientQueue);
-        simpleObject.put("patientTriageQueue", objectMapper.writeValueAsString(mapPatientQueueToMapper(patientQueue)));
+        SimpleObject simpleObject1=simpleObject.create("patientNames",names.replace("null", ""),"dateCreated",patientQueue.getDateCreated(),"visitNumber",patientQueue.getVisitNumber(),"gender",patientQueue.getPatient().getGender(),"locationFrom",patientQueue.getLocationFrom().getName(),"creatorNames",(patientQueue.getCreator().getPersonName().getFullName()));
+        simpleObject.put("patientTriageQueue", objectMapper.writeValueAsString(simpleObject1));
         return simpleObject;
     }
 
     private VisitType getFacilityVisitType() {
         String visitTypeUUID = Context.getAdministrationService().getGlobalProperty("patientqueueing.defaultFacilityVisitTypeUUID");
         return Context.getVisitService().getVisitTypeByUuid(visitTypeUUID);
-    }
-
-    private PatientQueueMapper mapPatientQueueToMapper(PatientQueue patientQueue) {
-        PatientQueueMapper patientQueueMapper = new PatientQueueMapper();
-        if (patientQueue != null) {
-            String names = patientQueue.getPatient().getFamilyName() + " " + patientQueue.getPatient().getGivenName() + " " + patientQueue.getPatient().getMiddleName();
-
-            patientQueueMapper.setId(patientQueue.getId());
-            patientQueueMapper.setPatientNames(names.replace("null", ""));
-            patientQueueMapper.setPatientId(patientQueue.getPatient().getPatientId());
-            patientQueueMapper.setLocationFrom(patientQueue.getLocationFrom().getName());
-            patientQueueMapper.setLocationTo(patientQueue.getLocationTo().getName());
-            if (patientQueue.getProvider() != null) {
-                patientQueueMapper.setProviderNames(patientQueue.getProvider().getName());
-            }
-
-            if (patientQueue.getCreator() != null) {
-                patientQueueMapper.setCreatorNames(patientQueue.getCreator().getPersonName().getFullName());
-            }
-            patientQueueMapper.setStatus(patientQueue.getStatus().name());
-            patientQueueMapper.setVisitNumber(patientQueue.getVisitNumber());
-            patientQueueMapper.setGender(patientQueue.getPatient().getGender());
-            patientQueueMapper.setAge(patientQueue.getPatient().getAge().toString());
-            patientQueueMapper.setDateCreated(patientQueue.getDateCreated().toString());
-        }
-        return patientQueueMapper;
     }
 }
