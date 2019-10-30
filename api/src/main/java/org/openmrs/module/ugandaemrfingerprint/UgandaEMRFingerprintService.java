@@ -17,6 +17,7 @@ import org.openmrs.module.ugandaemrfingerprint.core.PatientInOtherFacility;
 import org.openmrs.module.ugandaemrfingerprint.core.PatientName;
 import org.springframework.transaction.annotation.Transactional;
 import org.openmrs.module.ugandaemrfingerprint.model.Fingerprint;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

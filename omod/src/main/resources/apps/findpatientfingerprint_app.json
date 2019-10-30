@@ -3,22 +3,25 @@
         "id": "fingerprint.findPatient",
         "instanceOf": "coreapps.template.findPatient",
         "description": "Patient search by fingerprint that goes to the patient dashboard",
-        "order": 2,
+        "order": 0,
         "extensions": [
             {
                 "id": "coreapps.activeVisitsHomepageLink",
                 "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
                 "type": "link",
-                "label": "Find Patient by FingerPrint",
+                "label": "Find Patient",
                 "url": "ugandaemrfingerprint/findpatient/findPatient.page?app=fingerprint.findPatient",
-                "icon": "icon-hand-up",
+                "icon": "icon-search",
                 "requiredPrivilege": "App: fingerprint.findPatient"
             }
-        ]
+        ],
+        "config": {
+            "registrationAppLink": "registrationapp/registerPatient.page?appId=aijar.registrationapp.registerPatient"
+        }
     },{
     "id": "fingerprint.statistic",
     "description": "Patient search by fingerprint that goes to the patient dashboard",
-    "order": 2,
+    "order": 0,
     "extensions": [
         {
             "id": "coreapps.activeVisitsHomepageLink",
@@ -33,7 +36,7 @@
 },{
     "id": "fingerprint.configs",
     "description": "FingerPrint Configurations",
-    "order": 5,
+    "order": 0,
     "extensions": [
         {
             "id": "coreapps.activeVisitsHomepageLink",
