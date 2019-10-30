@@ -17,5 +17,23 @@
     "icon": "icon-hand-up",
     "order": 20,
     "requiredPrivilege": "App: fingerprint.add"
-  }
+  },{
+  "id": "ugandaemr.registrationSummary.personaddress",
+  "label": "Address",
+  "icon": "icon-user",
+  "extensions": [
+    {
+      "id": "org.openmrs.module.ugandaemr.registrationSummary.personaddress",
+      "extensionPointId": "registrationSummary.secondColumnContentFragments",
+      "extensionParams": {
+        "provider": "registrationapp",
+        "fragment": "summary/section",
+        "fragmentConfig": {
+          "sectionId": "address",
+          "appId": "aijar.registrationapp.registerPatient"
+        }
+      }
+    }
+  ]
+}
 ]

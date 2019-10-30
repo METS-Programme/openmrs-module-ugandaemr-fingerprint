@@ -6,25 +6,28 @@
     var breadcrumbs = ${ breadcrumbs };
     <% } else { %>
     var breadcrumbs = [
-        { icon: "icon-home", link: '/' + OPENMRS_CONTEXT_PATH + '/index.htm' },
-        { label: "${ ui.message(label)}"}
+        {icon: "icon-home", link: '/' + OPENMRS_CONTEXT_PATH + '/index.htm'},
+        {label: "${ ui.message(label)}"}
     ];
     <% } %>
-    jq(function() {
+    jq(function () {
         jq('#patient-search').focus();
     });
 </script>
 
-<h2>
-    ${ ui.message(heading) }
-</h2>
-<% if (breadcrumbs) { %>
-${ ui.includeFragment("ugandaemrfingerprint", "patientsearch/patientSearchWidget",
-        [ afterSelectedUrl: afterSelectedUrl,
-          showLastViewedPatients: showLastViewedPatients,
-          breadcrumbOverride: breadcrumbs])}
-<% } else { %>
-${ ui.includeFragment("ugandaemrfingerprint", "patientsearch/patientSearchWidget",
-        [ afterSelectedUrl: afterSelectedUrl,
-          showLastViewedPatients: showLastViewedPatients ])}
-<% } %>
+<div class="border border-dark">
+
+    <h2>
+        ${ui.message(heading)}
+    </h2>
+    <% if (breadcrumbs) { %>
+    ${ui.includeFragment("ugandaemrfingerprint", "patientsearch/patientSearchWidget",
+            [afterSelectedUrl      : afterSelectedUrl,
+             showLastViewedPatients: showLastViewedPatients,
+             breadcrumbOverride    : breadcrumbs])}
+    <% } else { %>
+    ${ui.includeFragment("ugandaemrfingerprint", "patientsearch/patientSearchWidget",
+            [afterSelectedUrl      : afterSelectedUrl,
+             showLastViewedPatients: showLastViewedPatients])}
+    <% } %>
+</div>

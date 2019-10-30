@@ -14,17 +14,15 @@
         jq('#patient-search').focus();
     });
 </script>
-
-<h2>
-    ${ ui.message(heading) }
-</h2>
 <% if (breadcrumbs) { %>
 ${ ui.includeFragment("ugandaemrfingerprint", "patientsearch/patientSearchWidget",
         [ afterSelectedUrl: afterSelectedUrl,
           showLastViewedPatients: showLastViewedPatients,
-          breadcrumbOverride: breadcrumbs])}
+          breadcrumbOverride: breadcrumbs,
+          registrationAppLink: registrationAppLink])}
 <% } else { %>
 ${ ui.includeFragment("ugandaemrfingerprint", "patientsearch/patientSearchWidget",
         [ afterSelectedUrl: afterSelectedUrl,
-          showLastViewedPatients: showLastViewedPatients ])}
+          showLastViewedPatients: showLastViewedPatients,
+          registrationAppLink: registrationAppLink])}
 <% } %>
