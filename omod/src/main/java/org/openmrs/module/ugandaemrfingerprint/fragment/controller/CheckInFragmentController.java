@@ -74,8 +74,8 @@ public class CheckInFragmentController {
         patientQueue.setDateCreated(new Date());
         patientQueueingService.assignVisitNumberForToday(patientQueue);
         patientQueueingService.savePatientQue(patientQueue);
-        SimpleObject simpleObject1=simpleObject.create("patientNames",names.replace("null", ""),"dateCreated",patientQueue.getDateCreated(),"visitNumber",patientQueue.getVisitNumber(),"gender",patientQueue.getPatient().getGender(),"locationFrom",patientQueue.getLocationFrom().getName(),"creatorNames",(patientQueue.getCreator().getPersonName().getFullName()));
-        simpleObject.put("patientTriageQueue", objectMapper.writeValueAsString(simpleObject1));
+        SimpleObject patientQueueJsonObject=simpleObject.create("patientNames",names.replace("null", ""),"dateCreated",patientQueue.getDateCreated(),"visitNumber",patientQueue.getVisitNumber(),"gender",patientQueue.getPatient().getGender(),"locationFrom",patientQueue.getLocationFrom().getName(),"creatorNames",(patientQueue.getCreator().getPersonName().getFullName()));
+        simpleObject.put("patientTriageQueue", objectMapper.writeValueAsString(patientQueueJsonObject));
         return simpleObject;
     }
 
