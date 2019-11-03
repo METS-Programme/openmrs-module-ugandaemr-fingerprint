@@ -74,8 +74,8 @@
 			<artifactId>dataexchange-api</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>uiframework-api</artifactId>
 		</dependency>
 		<!--End FingerPrint Device -->
 	</dependencies>
