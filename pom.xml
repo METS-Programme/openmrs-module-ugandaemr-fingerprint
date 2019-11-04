@@ -38,7 +38,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <emrapiVersion>1.11</emrapiVersion>
-        <jsonVersion>20160810</jsonVersion>
         <coreappsVersion>1.12.0</coreappsVersion>
         <appframeworkVersion>2.4</appframeworkVersion>
         <appuiVersion>1.7</appuiVersion>
@@ -56,6 +55,7 @@
         <metadatadeployVersion>1.7</metadatadeployVersion>
         <metadatamappingVersion>1.2.0</metadatamappingVersion>
         <metadatasharingVersion>1.2.2</metadatasharingVersion>
+        <patientqueueingVersion>1.0.0-SNAPSHOT</patientqueueingVersion>
         <serializationxstreamVersion>0.2.12</serializationxstreamVersion>
         <uiframeworkVersion>3.6</uiframeworkVersion>
         <digitalPersonaVersion>2.2.0</digitalPersonaVersion>
@@ -74,11 +74,6 @@
                 <scope>compile</scope>
             </dependency>
             -->
-            <dependency>
-                <groupId>org.json</groupId>
-                <artifactId>json</artifactId>
-                <version>${jsonVersion}</version>
-            </dependency>
 
             <!-- Begin OpenMRS core -->
             <!-- Importing versions from refapp distro -->
@@ -189,6 +184,13 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>5.1.22</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>patientqueueing-api</artifactId>
+                <version>${patientqueueingVersion}</version>
+                <scope>provided</scope>
             </dependency>
 
             <dependency>
