@@ -3,7 +3,6 @@ package org.openmrs.module.ugandaemrfingerprint.fragment.controller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.json.JSONObject;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.appui.UiSessionContext;
@@ -34,19 +33,19 @@ public class PatientInOtherFacilityFragmentController {
 
     public SimpleObject processPatientEncounters(FragmentModel model, @RequestParam(value = "patientData", required = false) java.lang.String patientData, UiUtils ui) throws IOException {
 
-        JSONObject jsonObj = new JSONObject();
-
-        jsonObj = new JSONObject(patientData);
-
         ObjectMapper objectMapper = new ObjectMapper();
 
         SimpleObject simpleObject = new SimpleObject();
+
+        SimpleObject simpleObject1=new SimpleObject();
+
+        simpleObject1.put("patientData",patientData);
 
         UgandaEMRFingerprintService ugandaEMRFingerprintService = Context.getService(UgandaEMRFingerprintService.class);
 
         PatientInOtherFacility patientInOtherFacility = new PatientInOtherFacility();
 
-        patientInOtherFacility = ugandaEMRFingerprintService.getPatientInOtherFacility(jsonObj);
+        patientInOtherFacility = ugandaEMRFingerprintService.getPatientInOtherFacility(simpleObject1);
 
         simpleObject.put("patientData", objectMapper.writeValueAsString(patientInOtherFacility));
 
