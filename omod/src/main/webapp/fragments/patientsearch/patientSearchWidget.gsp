@@ -88,8 +88,8 @@ body {
 
     var handlePatientRowSelection = new handlePatientRowSelection();
     var addPatientToQueueLink = "<a  data-toggle=\"modal\" data-target=\"#add_patient_to_queue_dialog\" data-patientid=\"patientIdPlaceHolder\" data-patientnames=\"patientNamsePlaceHolder\"><i style=\"font-size: 25px;\" data-target=\"#add_patient_to_queue_dialog\" class=\"icon-share\" title=\"Check In\"></i></a>";
-    var patientDashboardURL = "<i style=\"font-size: 25px;\" class=\"icon-file-alt\" title=\"Goto Patient Dashboard\" onclick=\" location.href = '/openmrs/coreapps/clinicianfacing/patient.page?patientId=patientIdPlaceHolder'\"></i>";
-    var editPatientLink = "<i style=\"font-size: 25px;\" class=\"icon-edit\" title=\"Edit Demographics\" onclick=\"location.href = '/openmrs/registrationapp/editSection.page?patientId=patientIdPlaceHolder&sectionId=demographics&appId=aijar.registrationapp.registerPatient&returnUrl=/openmrs/ugandaemrfingerprint/findpatient/findPatient.page?app=fingerprint.findPatient'\"></i>";
+    var patientDashboardURL = "<i style=\"font-size: 25px;\" class=\"icon-file-alt\" title=\"Goto Patient Dashboard\" onclick=\" location.href = '/"+OPENMRS_CONTEXT_PATH+"/coreapps/clinicianfacing/patient.page?patientId=patientIdPlaceHolder'\"></i>";
+    var editPatientLink = "<i style=\"font-size: 25px;\" class=\"icon-edit\" title=\"Edit Demographics\" onclick=\"location.href = '/"+OPENMRS_CONTEXT_PATH+"/registrationapp/editSection.page?patientId=patientIdPlaceHolder&sectionId=demographics&appId=aijar.registrationapp.registerPatient&returnUrl=/"+OPENMRS_CONTEXT_PATH+"/ugandaemrfingerprint/findpatient/findPatient.page?app=fingerprint.findPatient'\"></i>";
     var patientSearchWidget = null;
     jq(function () {
         var widgetConfig = {
@@ -160,7 +160,7 @@ body {
         } else if (message.type === "local" && message.patient !== "") {
             patientSearchWidget.searchByFingerPrint(message.patient);
         } else if (message.type === "online" && message.patient !== "" && ${searchOnline} === true) {
-            window.location = "/openmrs/ugandaemrfingerprint/patientInOtherFacility.page?patientId=" + message.patient;
+            window.location = "/"+OPENMRS_CONTEXT_PATH+"/ugandaemrfingerprint/patientInOtherFacility.page?patientId=" + message.patient;
         } else if (message.type === null && (message.patient === null || message.patient === "") && ${searchOnline} === true) {
             var message;
             message = '{"result":"Patient Not Found at Central Server"}';
