@@ -230,7 +230,7 @@ function PatientSearchWidget(configuration) {
                             function (response) {
                                 if (response && response.data.patient !== null) {
                                     jq().toastmessage('showSuccessToast', "Patient Found");
-                                    window.location = "/openmrs/ugandaemrfingerprint/patientInOtherFacility.page?patientId=" + response.data.patient.uuid;
+                                    window.location = "/"+OPENMRS_CONTEXT_PATH+"/ugandaemrfingerprint/patientInOtherFacility.page?patientId=" + response.data.patient.uuid;
                                 } else if (response.errors) {
                                     jq().toastmessage('showErrorToast', "Internal Server Error");
                                 } else {
