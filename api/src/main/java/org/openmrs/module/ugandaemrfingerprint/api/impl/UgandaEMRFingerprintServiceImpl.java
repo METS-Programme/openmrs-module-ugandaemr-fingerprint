@@ -12,8 +12,6 @@ package org.openmrs.module.ugandaemrfingerprint.api.impl;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.openmrs.Concept;
 import org.openmrs.EncounterType;
 import org.openmrs.api.ConceptService;
@@ -28,6 +26,7 @@ import org.openmrs.module.ugandaemrfingerprint.core.PatientInOtherFacility;
 import org.openmrs.module.ugandaemrfingerprint.core.PatientName;
 import org.openmrs.module.ugandaemrfingerprint.model.Fingerprint;
 import org.openmrs.module.ugandaemrfingerprint.model.PatientOb;
+import org.openmrs.ui.framework.SimpleObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,13 +103,15 @@ public class UgandaEMRFingerprintServiceImpl extends BaseOpenmrsService implemen
     }
 
 
-    public PatientInOtherFacility getPatientInOtherFacility(JSONObject client) {
+    public PatientInOtherFacility getPatientInOtherFacility(SimpleObject client) {
 
         List<PatientName> patientNames = new ArrayList<PatientName>();
 
-        patientNames = getPatientNames(client.getJSONArray(PATIENT_NAMES).getJSONObject(0));
+        SimpleObject simpleObject = (SimpleObject) client.get("patientData");
 
-        Facility facilities = getPatientFacility(client.getJSONObject(PATIENT_FACILITY_NAME));
+        patientNames = getPatientNames((SimpleObject) client.get(PATIENT_NAMES));
+
+        Facility facilities = getPatientFacility((SimpleObject) client.get(PATIENT_FACILITY_NAME));
 
         List<PatientOb> patientSummary = null;
 
@@ -118,9 +119,9 @@ public class UgandaEMRFingerprintServiceImpl extends BaseOpenmrsService implemen
 
 
         try {
-            if (client.getJSONObject(PATIENT_SUMMARY) != null) {
+            if (client.get(PATIENT_SUMMARY) != null) {
 
-                patientSummary = getEncounter(client.getJSONObject(PATIENT_SUMMARY).getJSONArray(OBS));
+                patientSummary = getEncounter((SimpleObject) ((SimpleObject) client.get(PATIENT_SUMMARY)).get(OBS));
             }
         } catch (Exception e) {
             log.error(e);
@@ -128,9 +129,8 @@ public class UgandaEMRFingerprintServiceImpl extends BaseOpenmrsService implemen
 
         List<PatientOb> lastEncounter = null;
         try {
-            if (client.getJSONObject(PATIENT_LAST_ENCOUNTER) != null) {
-
-                lastEncounter = getEncounter(client.getJSONObject(PATIENT_LAST_ENCOUNTER).getJSONArray(OBS));
+            if (client.get(PATIENT_LAST_ENCOUNTER) != null) {
+                lastEncounter = getEncounter((SimpleObject) ((SimpleObject) client.get(PATIENT_LAST_ENCOUNTER)).get(OBS));
             }
         } catch (Exception e) {
             log.error(e);
@@ -168,7 +168,7 @@ public class UgandaEMRFingerprintServiceImpl extends BaseOpenmrsService implemen
         return ecounterTypeName;
     }
 
-    private List<PatientName> getPatientNames(JSONObject jsonObject) {
+    private List<PatientName> getPatientNames(SimpleObject jsonObject) {
         List<PatientName> patientNames = new ArrayList<PatientName>();
         PatientName patientName = new PatientName();
         patientName.setFamilyName(jsonObject.get(PATIENT_FAMILY_NAME).toString());
@@ -181,7 +181,7 @@ public class UgandaEMRFingerprintServiceImpl extends BaseOpenmrsService implemen
         return patientNames;
     }
 
-    private Facility getPatientFacility(JSONObject map) {
+    private Facility getPatientFacility(SimpleObject map) {
         Facility facility = new Facility();
         facility.setName(map.get(NAME).toString());
         facility.setFacilityId(map.get(FingerPrintConstant.UUID_STRING).toString());
@@ -189,13 +189,15 @@ public class UgandaEMRFingerprintServiceImpl extends BaseOpenmrsService implemen
     }
 
 
-    private List<PatientOb> getEncounter(JSONArray jsonArray) {
+    private List<PatientOb> getEncounter(SimpleObject jsonArray) {
         List<PatientOb> obsList = new ArrayList<PatientOb>();
 
+        //TODO Refactor This Method to enable exhcnage to facility
+/*
         try {
             for (int i = 0; i <= jsonArray.length(); i++) {
                 PatientOb patientOb = new PatientOb();
-                JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                SimpleObject jsonObject1 = jsonArray.get(i);
                 patientOb.setEncounterDate(jsonObject1.get(ENCOUNTER_DATE).toString());
                 patientOb.setEncounterType((String) getEncounterType(cleanRecord(jsonObject1.get(ENCOUNTER_TYPE).toString().replace("\"", ""))));
                 patientOb.setValueBoolean((String) jsonObject1.get(VALUE_BOOLEAN).toString().replace("\"", ""));
@@ -215,7 +217,7 @@ public class UgandaEMRFingerprintServiceImpl extends BaseOpenmrsService implemen
             }
         } catch (Exception e) {
 
-        }
+        }*/
         return obsList;
     }
 
