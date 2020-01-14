@@ -11,6 +11,8 @@ import org.openmrs.api.LocationService;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.appui.UiSessionContext;
+import org.openmrs.module.coreapps.fragment.controller.visit.QuickVisitFragmentController;
+import org.openmrs.module.emrapi.adt.AdtService;
 import org.openmrs.module.patientqueueing.api.PatientQueueingService;
 import org.openmrs.module.patientqueueing.model.PatientQueue;
 import org.openmrs.ui.framework.SimpleObject;
@@ -62,6 +64,11 @@ public class CheckInFragmentController {
 
         if (visitComment != null) {
             //patientQueue.setComment(visitComment);
+        }
+
+        if (Context.getVisitService().getActiveVisitsByPatient(patient).isEmpty()) {
+            QuickVisitFragmentController quickVisitFragmentController = new QuickVisitFragmentController();
+            quickVisitFragmentController.create((AdtService) Context.getService(AdtService.class), Context.getVisitService(), patient, Context.getLocationService().getLocationByUuid("629d78e9-93e5-43b0-ad8a-48313fd99117"), uiUtils, getFacilityVisitType(), uiSessionContext, request);
         }
 
 
