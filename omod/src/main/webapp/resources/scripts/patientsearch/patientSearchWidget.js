@@ -304,9 +304,19 @@ function PatientSearchWidget(configuration) {
             _.each(results, function (patient) {
                 var birthdate = '';
                 var actions = "";
-                actions += config.messages.addPatientToQueueLink.replace("patientIdPlaceHolder", patient.uuid).replace("patientNamsePlaceHolder", patient.person.display);
-                actions += config.messages.patientDashboardURL.replace("patientIdPlaceHolder", patient.uuid);
-                actions += config.messages.editPatientLink.replace("patientIdPlaceHolder", patient.uuid);
+
+                if(config.messages.addPatientToQueueLink){
+                    actions += config.messages.addPatientToQueueLink.replace("patientIdPlaceHolder", patient.uuid).replace("patientNamsePlaceHolder", patient.person.display);
+                }
+
+                if(config.messages.patientDashboardURL){
+                    actions += config.messages.patientDashboardURL.replace("patientIdPlaceHolder", patient.uuid);
+                }
+
+                if(config.messages.editPatientLink){
+                    actions += config.messages.editPatientLink.replace("patientIdPlaceHolder", patient.uuid);
+                }
+
                 var widgetBirthdate = patient.person.birthdate;
                 if (patient.person.birthdate) {
                     birthdate = moment(patient.person.birthdate).format(configuration.dateFormat);

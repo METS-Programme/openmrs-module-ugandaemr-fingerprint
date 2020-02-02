@@ -11,7 +11,7 @@
                 "type": "link",
                 "label": "Find Patient",
                 "url": "ugandaemrfingerprint/findpatient/findPatient.page?app=fingerprint.findPatient",
-                "icon": "icon-search",
+                "icon": "icon-hand-up",
                 "requiredPrivilege": "App: fingerprint.findPatient"
             }
         ],
