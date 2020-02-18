@@ -7,10 +7,27 @@
     "fragment": "fingerPrintDetails"
   },
   "requiredPrivilege": "App: fingerprint.fingerprintDetails"
-},
-  {
+},{
+  "id": "ugandaemrfingerprint.registrationSummary.fingerprintDetails",
+  "extensionPointId": "registrationSummary.secondColumnContentFragments",
+  "order": 5,
+  "extensionParams": {
+    "provider": "${project.parent.artifactId}",
+    "fragment": "fingerPrintDetails"
+  },
+  "requiredPrivilege": "App: fingerprint.fingerprintDetails"
+},{
     "id": "ugandaemrfingerprint.patientDashboard.patientActions.addPatientFingerprint",
     "extensionPointId": "patientDashboard.overallActions",
+    "type": "link",
+    "label": "ugandaemrfingerprint.app.addfingerprint.label",
+    "url": "ugandaemrfingerprint/addPatientFingerprint.page?patientId={{patient.uuid}}",
+    "icon": "icon-hand-up",
+    "order": 20,
+    "requiredPrivilege": "App: fingerprint.addPatientFingerprint"
+  },{
+    "id": "ugandaemrfingerprint.registrationSummary.patientActions.addPatientFingerprint",
+    "extensionPointId": "registrationSummary.overallActions",
     "type": "link",
     "label": "ugandaemrfingerprint.app.addfingerprint.label",
     "url": "ugandaemrfingerprint/addPatientFingerprint.page?patientId={{patient.uuid}}",
