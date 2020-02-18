@@ -233,5 +233,29 @@
         <description>Able to access the find patient app</description>
     </privilege>
 
+    <privilege>
+        <name>App: fingerprint.findPatient</name>
+        <description>Privilege to allow access to find patient fingerprint app</description>
+    </privilege>
+
+    <privilege>
+        <name>App: fingerprint.addPatientFingerprint</name>
+        <description>Privilege to allow adding patient fingerprint</description>
+    </privilege>
+
+    <privilege>
+        <name>App: fingerprint.fingerprintDetails</name>
+        <description>Privilege to allow access to the fingerprint details on the patients dashboard</description>
+    </privilege>
+
+    <privilege>
+        <name>App: fingerprint.configs</name>
+        <description>Privilege to allow adding changing fingerprint settings</description>
+    </privilege>
+
+    <privilege>
+        <name>App: fingerprint.statistic</name>
+        <description>Privilege to allow access to fingerprint statistics</description>
+    </privilege>
 </module>
 

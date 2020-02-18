@@ -6,7 +6,7 @@
     "provider": "${project.parent.artifactId}",
     "fragment": "fingerPrintDetails"
   },
-  "requiredPrivilege": "App: fingerprint.add"
+  "requiredPrivilege": "App: fingerprint.fingerprintDetails"
 },
   {
     "id": "ugandaemrfingerprint.patientDashboard.patientActions.addPatientFingerprint",
@@ -16,6 +16,6 @@
     "url": "ugandaemrfingerprint/addPatientFingerprint.page?patientId={{patient.uuid}}",
     "icon": "icon-hand-up",
     "order": 20,
-    "requiredPrivilege": "App: fingerprint.add"
+    "requiredPrivilege": "App: fingerprint.addPatientFingerprint"
   }
 ]
