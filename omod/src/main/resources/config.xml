@@ -191,48 +191,6 @@
         </description>
     </globalProperty>
 
-
-    <privilege>
-        <name>Task: coreapps.endVisit</name>
-        <description>Able to end a visit</description>
-    </privilege>
-
-    <privilege>
-        <name>Task: coreapps.createVisit</name>
-        <description>Able to create a visit</description>
-    </privilege>
-
-    <privilege>
-        <name>Task: coreapps.createRetrospectiveVisit</name>
-        <description>Able to create a retrospective visit</description>
-    </privilege>
-
-    <privilege>
-        <name>Task: coreapps.mergeVisits</name>
-        <description>Able to merge visits</description>
-    </privilege>
-
-    <privilege>
-        <name>Task: coreapps.deletePatient</name>
-        <description>Able to delete a patient</description>
-    </privilege>
-
-    <privilege>
-        <name>App: coreapps.findPatient</name>
-        <description>Able to access the find patient app</description>
-    </privilege>
-
-    <privilege>
-        <name>App: coreapps.patientDashboard</name>
-        <description>Able to access the patient dashboard</description>
-    </privilege>
-
-
-    <privilege>
-        <name>App: coreapps.findPatient</name>
-        <description>Able to access the find patient app</description>
-    </privilege>
-
     <privilege>
         <name>App: fingerprint.findPatient</name>
         <description>Privilege to allow access to find patient fingerprint app</description>
