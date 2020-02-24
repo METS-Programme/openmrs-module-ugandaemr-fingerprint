@@ -61,11 +61,6 @@ public class UgandaEMRFingerprintActivator implements ModuleActivator {
         MetadataDeployService deployService = Context.getService(MetadataDeployService.class);
         FingerPrintGlobalProperties fingerPrintGlobalProperties = new FingerPrintGlobalProperties();
         try {
-            DataImporter dataImporter = Context.getRegisteredComponent("dataImporter", DataImporter.class);
-            log.info("Installing Privileges for Point of Care");
-            dataImporter.importData("metadata/Fingerprint_Privileges.xml");
-            log.info("Privileges  Installation Complete");
-
             fingerPrintGlobalProperties.setFingerPrintGlobalProperties();
             installCommonMetadata(deployService);
             log.info("UgandaEMR FingerPrint Module started");
