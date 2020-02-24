@@ -30,7 +30,7 @@
             "label": "Fingerprint Statistics",
             "url": "ugandaemrfingerprint/fingerPrintStatistic.page",
             "icon": "icon-bar-chart",
-            "requiredPrivilege": "App: fingerprint.findPatient"
+            "requiredPrivilege": "App: fingerprint.statistic"
         }
     ]
 },{
@@ -45,7 +45,7 @@
             "label": "FingerPrint Settings",
             "url": "admin/maintenance/settings.list?show=Ugandaemrfingerprint",
             "icon": " icon-cog",
-            "requiredPrivilege": "App: coreapps.systemAdministration"
+            "requiredPrivilege": "App: fingerprint.configs"
         }
     ]
 }
