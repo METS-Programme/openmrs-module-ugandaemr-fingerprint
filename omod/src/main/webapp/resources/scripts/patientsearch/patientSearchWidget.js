@@ -51,6 +51,7 @@ function PatientSearchWidget(configuration) {
     var performingSearch = false;  // flag to check if we are currently updating the search results
     var afterSearchResultsUpdated = [];  // stores a set of functions to execute after we update search results (currently we are only using this for the doEnter function)
     var lastQuery = null;
+    var numberOfRowsAfterSearch=0;
 
     //FingerPrint
     var patientSearchFingerPrintDiv = jq('#patient-search-finger-print');
@@ -218,9 +219,11 @@ function PatientSearchWidget(configuration) {
     var searchOnExactIdentifierMatchThenIdentifierAndName = function (query, currRequestCount, autoSelectIfExactIdentifierMatch) {
         emr.getJSON(searchUrl, {identifier: query, v: customRep})
             .done(function (data) {
+                numberOfRowsAfterSearch=data.results.length;
                 // update only if we've got results, and not late (late ajax responses should be ignored not to overwrite the latest)
                 if (data && data.results && data.results.length > 0 && (!currRequestCount || currRequestCount >= requestCount)) {
                     updateSearchResults(data.results);
+                    searchResults=data;
                     if (autoSelectIfExactIdentifierMatch && data.results.length == 1) {
                         selectRow(0);
                     }
@@ -386,6 +389,18 @@ function PatientSearchWidget(configuration) {
         searchOnUUID(uuid);
     }
     this.searchByFingerPrint = searchByFingerPrint;
+
+    var searchByIdentifiers = function (identifier) {
+        searchOnExactIdentifierMatchThenIdentifierAndName(identifier);
+    }
+
+    this.searchByIdentifiers = searchByIdentifiers;
+
+
+    var getCountAfterSearch=function () {
+        return numberOfRowsAfterSearch;
+    }
+    this.getCountAfterSearch=getCountAfterSearch;
 
     // remove any patients from a results list that are already in the search results
     // this is necessary because the searchOnIdentifiers performs multiple searchs and could return duplicates
