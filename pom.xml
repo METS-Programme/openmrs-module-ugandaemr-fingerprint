@@ -21,10 +21,10 @@
     </organization>
 
     <scm>
-        <connection>scm:git:https://github.com/METS-Programme/openmrs-module-ugandaemr-fingerprint.git</connection>
-        <developerConnection>scm:git:https://github.com/METS-Programme/openmrs-module-ugandaemr-fingerprint.git
+        <connection>scm:git:git@github.com:METS-Programme/openmrs-module-ugandaemr-fingerprint.git</connection>
+        <developerConnection>scm:git:git@github.com:METS-Programme/openmrs-module-ugandaemr-fingerprint.git
         </developerConnection>
-        <url>https://github.com/METS-Programme/openmrs-module-ugandaemr-fingerprint.git</url>
+        <url>git@github.com:METS-Programme/openmrs-module-ugandaemr-fingerprint.git</url>
         <tag>HEAD</tag>
     </scm>
 
